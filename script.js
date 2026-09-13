@@ -1,6 +1,17 @@
 document.documentElement.classList.add('js');
 requestAnimationFrame(() => document.body.classList.add('intro-ready'));
 
+// The tagline is sized so it spans exactly the width of the name line above it.
+function fitTagline(){
+  const name = document.getElementById('nameLine'), tag = document.getElementById('tagLine');
+  if (!name || !tag) return;
+  tag.style.fontSize = '';
+  const ratio = name.getBoundingClientRect().width / tag.getBoundingClientRect().width;
+  tag.style.fontSize = (parseFloat(getComputedStyle(tag).fontSize) * ratio).toFixed(2) + 'px';
+}
+document.fonts.ready.then(fitTagline);
+window.addEventListener('resize', fitTagline);
+
 // ---------- Nav ----------
 const nav = document.getElementById('nav');
 const navToggle = document.getElementById('navToggle');
