@@ -104,14 +104,14 @@ img{ max-width:100%; }
 .js .intro-ready .intro{ animation: introUp 1.25s cubic-bezier(.16,.7,.2,1) both; animation-delay: var(--d, 0s); }
 @keyframes introUp{ from{ opacity:0; transform: translateY(24px); } to{ opacity:1; transform:none; } }
 .js .intro-pop{ opacity: 0; }
-.js .intro-ready .intro-pop{ animation: introPop 1.15s cubic-bezier(.34,1.45,.64,1) .8s both; }
+.js .intro-ready .intro-pop{ animation: introPop .95s cubic-bezier(.34,1.5,.64,1) .8s both; }
 @keyframes introPop{
   0%{ opacity:0; transform: scale(.55) translateY(28px); }
   55%{ opacity:1; }
   100%{ opacity:1; transform: none; }
 }
 /* the head overshoots a touch more and lands a beat later than the shoulders */
-.js .intro-ready .head{ animation: introHead 1.25s cubic-bezier(.34,1.6,.64,1) .86s both; }
+.js .intro-ready .head{ animation: introHead 1.05s cubic-bezier(.34,1.7,.64,1) .85s both; }
 @keyframes introHead{ from{ transform: scale(.82) translateY(10px); } to{ transform: none; } }
 .js .portrait-hint.intro{ transform: none; }
 .js .intro-ready .portrait-hint.intro{ animation-name: introFade; }
