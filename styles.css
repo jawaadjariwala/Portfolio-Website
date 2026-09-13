@@ -341,11 +341,29 @@ img{ max-width:100%; }
 }
 
 /* ---------- About ---------- */
-.about-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 72px; }
-.about-lead{ font-size: clamp(1.7rem, 2.7vw, 2.3rem); }
-.about-body p{ color: var(--ink-soft); margin-bottom: 18px; font-size: 16.5px; }
-.about-body strong{ color: var(--ink); font-weight: 600; }
-.about-body em{ color: var(--ink); }
+.about-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-bottom: 84px; align-items: start; }
+.about-lead{ font-size: clamp(1.9rem, 3vw, 2.6rem); max-width: 15ch; }
+/* Three labelled one-liners instead of paragraphs: scannable in a few seconds. */
+.about-points{ display:flex; flex-direction:column; gap: 30px; padding-top: 8px; }
+.about-points li{ display:grid; grid-template-columns: 82px 1fr; gap: 22px; align-items: baseline; }
+.about-points li > span:last-child{ color: var(--ink-soft); font-size: 16.5px; line-height: 1.55; }
+.about-points strong{ color: var(--ink); font-weight: 600; }
+.pt-label{
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+}
+/* Toolkit: four quiet columns, no pills or logos. */
+.toolkit{
+  margin-top: 84px; padding-top: 44px; border-top: 1px solid rgba(42,26,94,0.10);
+  display:grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+}
+.tk-group h3{
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+  margin: 0 0 16px;
+}
+.tk-group ul{ display:flex; flex-direction:column; gap: 8px; }
+.tk-group li{ font-size: 15px; color: var(--ink-soft); }
 
 .facts-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .fact{
@@ -449,7 +467,9 @@ img{ max-width:100%; }
   .hero-sub{ margin-left:auto; margin-right:auto; }
   .hero-actions, .hero-meta{ justify-content:center; }
   .hero-meta li{ align-items:center; }
-  .about-grid{ grid-template-columns: 1fr; gap: 24px; }
+  .about-grid{ grid-template-columns: 1fr; gap: 34px; }
+  .about-points li{ grid-template-columns: 1fr; gap: 6px; }
+  .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
   .facts-row{ grid-template-columns: repeat(2, 1fr); }
   .project, .project:nth-child(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
   .project:nth-child(even) .project-figure{ order: -1; }
