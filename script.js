@@ -127,6 +127,7 @@ function setHint(text, offset){
   setTimeout(() => {
     hintText.textContent = text;
     hintText.setAttribute('startOffset', offset);
+    if (text === HINT_DEFAULT.text) hintText.setAttribute('textLength', '88'); else hintText.removeAttribute('textLength');
     hint.classList.remove('is-swapping');
   }, 200);
 }
