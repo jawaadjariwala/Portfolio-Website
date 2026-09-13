@@ -192,7 +192,9 @@ img{ max-width:100%; }
   position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:2;
   font-family: 'Fredoka', 'Quicksand', 'Inter', sans-serif; font-weight: 600; font-size: 3.7px; letter-spacing: 0.02em;
   fill: var(--accent); opacity: .78;
+  transition: opacity .2s ease;
 }
+.portrait-hint.is-swapping{ opacity: 0; }
 
 /* dizzy easter egg */
 .stars{ position:absolute; inset:0; pointer-events:none; }

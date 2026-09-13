@@ -82,6 +82,7 @@ function noteQuadrant(dx, dy){
   quadChanges.push(now);
   if (quadChanges.length >= 7 && now > dizzyUntil && now > lastDizzyEnd + 6000){
     dizzyStart = now; dizzyUntil = now + DIZZY_MS; quadChanges = [];
+    setHint('be gentle !', '58%');
   }
 }
 
@@ -116,6 +117,19 @@ function renderDizzy(now){
 }
 function hideStars(){ [...starsBack, ...starsFront].forEach(el => { el.style.opacity = '0'; }); }
 
+// The curved hint swaps to "be gentle!" while dizzy, then back.
+const hint = document.querySelector('.portrait-hint');
+const hintText = document.querySelector('.portrait-hint textPath');
+const HINT_DEFAULT = { text: hintText.textContent, offset: hintText.getAttribute('startOffset') };
+function setHint(text, offset){
+  hint.classList.add('is-swapping');
+  setTimeout(() => {
+    hintText.textContent = text;
+    hintText.setAttribute('startOffset', offset);
+    hint.classList.remove('is-swapping');
+  }, 200);
+}
+
 window.addEventListener('mousemove', e => onPointer(e.clientX, e.clientY), { passive: true });
 window.addEventListener('touchmove', e => {
   if (e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY);
@@ -146,7 +160,7 @@ function frame(t){
     requestAnimationFrame(frame);
     return;
   }
-  if (lastDizzyEnd < dizzyStart && dizzyUntil){ lastDizzyEnd = t; hideStars(); }
+  if (lastDizzyEnd < dizzyStart && dizzyUntil){ lastDizzyEnd = t; hideStars(); setHint(HINT_DEFAULT.text, HINT_DEFAULT.offset); }
 
   const up = Math.max(0, -cy), down = Math.max(0, cy);
   if (!reduceMotion){
