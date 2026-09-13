@@ -188,6 +188,12 @@ img{ max-width:100%; }
 .feat img{ display:block; width:100%; height:100%; transform-origin: 50% 50%; will-change: transform; }
 .mouth img{ transform-origin: 94.5% 67.3%; }
 
+.portrait-hint{
+  position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:2;
+  font-family: 'Quicksand', 'Inter', sans-serif; font-weight: 700; font-size: 3.4px; letter-spacing: 0.06em;
+  fill: var(--accent); opacity: .72;
+}
+
 /* dizzy easter egg */
 .stars{ position:absolute; inset:0; pointer-events:none; }
 .star{ position:absolute; width: 6.5%; aspect-ratio: 1; opacity: 0; will-change: transform, opacity; }
