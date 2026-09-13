@@ -498,7 +498,7 @@ img{ max-width:100%; }
   /* Enough clearance that the curved hint above his head cannot reach the header. */
   .hero{ padding-top: calc(var(--nav-h) + 56px); }
   .hero-sub{ margin-left:auto; margin-right:auto; }
-  .hero-actions, .hero-meta{ justify-content:center; }
+  .hero-actions, .hero-meta, .hero-note{ justify-content:center; }
   .hero-meta li{ align-items:center; }
   .about-grid{ grid-template-columns: 1fr; gap: 34px; }
   .about-points li{ grid-template-columns: 1fr; gap: 6px; }
@@ -512,17 +512,30 @@ img{ max-width:100%; }
   .section-head{ flex-direction: column; align-items:flex-start; margin-bottom: 40px; }
 }
 @media (max-width: 640px){
-  :root{ --bezel: 10px; --inset: 28px; --nav-h: 130px; }
-  .nav{ padding: var(--inset) var(--inset) 14px; }
+  :root{ --bezel: 8px; --inset: 20px; --nav-h: 92px; }
+  /* Compact header: the phone has no room for the desktop proportions. */
+  .nav{ padding: var(--inset) var(--inset) 10px; gap: 12px; }
+  .nav-logo{ width: 54px; height: 54px; }
+  .nav-divider{ height: 22px; }
+  .menu-btn{ font-size: 11px; letter-spacing: .16em; }
+  .hire-icon{ width: 26px; height: 26px; top: 2px; }
   .menu-head{ padding: var(--inset) var(--inset) 14px; }
   .menu-inner{ padding: 6px var(--inset) 48px; }
-  .hire{ gap: 8px; margin-right: 0; }
-  .hire-label{ font-size: 11.5px; letter-spacing: .16em; }
+  .hire{ gap: 7px; margin-right: 0; }
+  .hire-label{ font-size: 10.5px; letter-spacing: .12em; }
   .menu-socials{ margin-bottom: 32px; }
   .menu-item{ grid-template-columns: 1fr; align-items: start; gap: 4px; padding: 12px 0; }
   .menu-item-desc{ padding-bottom: 0; }
   /* shorthand would reset the clearance set at 960px, so restate it */
-  .hero{ padding: calc(var(--nav-h) + 72px) 20px 60px; }
+  .hero{ padding: calc(var(--nav-h) + 40px) 20px 48px; }
+  .hero-inner{ gap: 18px; }
+  /* Phone hero carries the name, the line, and the two buttons. Nothing else. */
+  .hero-sub{ display: none; }
+  .portrait-stage{ width: min(66vw, 300px); }
+  .hero-actions{ margin-bottom: 18px; }
+  /* Stack the two facts rather than wrapping them and stranding the dot. */
+  .hero-note{ flex-direction: column; gap: 3px; text-align: center; }
+  .hero-note-sep{ display: none; }
   .scroll-cue{ display:none; }
   .section-inner{ padding: 0 20px; }
   .facts-row{ grid-template-columns: 1fr 1fr; gap: 10px; }
