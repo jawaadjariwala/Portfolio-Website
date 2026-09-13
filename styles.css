@@ -162,7 +162,7 @@ img{ max-width:100%; }
 }
 .menu-btn:hover{ opacity: .65; }
 .hire{
-  margin-left: auto; display:inline-flex; align-items:center; gap: 12px;
+  margin-left: auto; margin-right: 24px; display:inline-flex; align-items:center; gap: 12px;
   transition: opacity .2s ease;
 }
 .hire:hover{ opacity: .7; }
@@ -456,7 +456,7 @@ img{ max-width:100%; }
   .nav{ padding: var(--inset) var(--inset) 14px; }
   .menu-head{ padding: var(--inset) var(--inset) 14px; }
   .menu-inner{ padding: 6px var(--inset) 48px; }
-  .hire{ gap: 8px; }
+  .hire{ gap: 8px; margin-right: 0; }
   .hire-label{ font-size: 11.5px; letter-spacing: .16em; }
   .menu-socials{ margin-bottom: 32px; }
   .menu-item{ grid-template-columns: 1fr; align-items: start; gap: 4px; padding: 12px 0; }
