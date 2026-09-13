@@ -1,4 +1,5 @@
 document.documentElement.classList.add('js');
+requestAnimationFrame(() => document.body.classList.add('intro-ready'));
 
 // ---------- Nav ----------
 const nav = document.getElementById('nav');
