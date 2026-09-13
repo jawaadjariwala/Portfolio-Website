@@ -88,22 +88,23 @@ function noteQuadrant(dx, dy){
 function renderDizzy(now){
   const e = (now - dizzyStart) / 1000;
   const env = e < 2.4 ? Math.min(1, e / 0.25) : Math.max(0, (3 - e) / 0.6);   // ease in, hold, ease out
-  const wob = Math.sin(e * Math.PI * 2 * 1.5) * 3.5 * env;
-  head.style.transform = `translate(${(Math.sin(e * 6.5) * 1.5 * env).toFixed(2)}px, ${(1.5 * env).toFixed(2)}px) rotate(${wob.toFixed(2)}deg)`;
-  // confused: one brow down and knitted, the other up; smile flips into a small frown
+  const wob = Math.sin(e * Math.PI * 2 * 0.9) * 3 * env;
+  head.style.transform = `translate(${(Math.sin(e * 4) * 1.2 * env).toFixed(2)}px, ${(1.5 * env).toFixed(2)}px) rotate(${wob.toFixed(2)}deg)`;
+  // confused: one brow down and knitted, the other up; the smile relaxes into a shallow, slightly
+  // lopsided frown (pinned at the moustache end, so the left corner dips a touch more)
   browLeft.style.transform  = `translateY(${(3 / BROW_H * 100 * env).toFixed(2)}%) rotate(${(5 * env).toFixed(2)}deg)`;
   browRight.style.transform = `translateY(${(-6 / BROW_H * 100 * env).toFixed(2)}%) rotate(${(-3 * env).toFixed(2)}deg)`;
-  mouth.style.transform = `translateY(${(3 / MOUTH_H * 100 * env).toFixed(2)}%) scale(0.92, ${(1 - 1.6 * env).toFixed(3)})`;
+  mouth.style.transform = `translateY(${(2 / MOUTH_H * 100 * env).toFixed(2)}%) scale(${(1 - 0.06 * env).toFixed(3)}, ${(1 - 1.4 * env).toFixed(3)})`;
   // eyes roll
   stage.style.setProperty('--ex', (Math.cos(e * 5) * 0.9 * env).toFixed(3));
   stage.style.setProperty('--ey', (Math.sin(e * 5) * 0.6 * env).toFixed(3));
   // three stars on an ellipse around the crown; behind the head at the back of the orbit
   for (let i = 0; i < 3; i++){
-    const a = e * 2.4 + i * Math.PI * 2 / 3;
+    const a = e * 1.5 + i * Math.PI * 2 / 3;
     const x = 49 + 31 * Math.cos(a), y = 17 + 7 * Math.sin(a);
     const front = Math.sin(a) > 0;
     const s = (0.65 + 0.4 * (Math.sin(a) + 1) / 2) * env;
-    const tf = `translate(-50%, -50%) rotate(${(e * 160 + i * 40).toFixed(0)}deg) scale(${s.toFixed(3)})`;
+    const tf = `translate(-50%, -50%) rotate(${(e * 90 + i * 40).toFixed(0)}deg) scale(${s.toFixed(3)})`;
     [starsBack[i], starsFront[i]].forEach((el, k) => {
       const show = (k === 1) === front;
       el.style.opacity = show ? env.toFixed(3) : '0';
