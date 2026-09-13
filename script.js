@@ -88,13 +88,15 @@ function noteQuadrant(dx, dy){
 function renderDizzy(now){
   const e = (now - dizzyStart) / 1000;
   const env = e < 2.4 ? Math.min(1, e / 0.25) : Math.max(0, (3 - e) / 0.6);   // ease in, hold, ease out
-  const wob = Math.sin(e * Math.PI * 2 * 0.9) * 3 * env;
-  head.style.transform = `translate(${(Math.sin(e * 4) * 1.2 * env).toFixed(2)}px, ${(1.5 * env).toFixed(2)}px) rotate(${wob.toFixed(2)}deg)`;
+  // gentle wobble: mostly a nod with a small tilt, so the jaw corners stay on the neck lines
+  const wob = Math.sin(e * Math.PI * 2 * 0.9) * 1.1 * env;
+  const bob = (1.5 + Math.sin(e * Math.PI * 2 * 0.9 + 1) * 1.5) * env;
+  head.style.transform = `translate(${(Math.sin(e * 4) * 0.5 * env).toFixed(2)}px, ${bob.toFixed(2)}px) rotate(${wob.toFixed(2)}deg)`;
   // confused: one brow down and knitted, the other up; the smile relaxes into a shallow, slightly
   // lopsided frown (pinned at the moustache end, so the left corner dips a touch more)
   browLeft.style.transform  = `translateY(${(3 / BROW_H * 100 * env).toFixed(2)}%) rotate(${(5 * env).toFixed(2)}deg)`;
   browRight.style.transform = `translateY(${(-6 / BROW_H * 100 * env).toFixed(2)}%) rotate(${(-3 * env).toFixed(2)}deg)`;
-  mouth.style.transform = `translateY(${(2 / MOUTH_H * 100 * env).toFixed(2)}%) scale(${(1 - 0.06 * env).toFixed(3)}, ${(1 - 1.4 * env).toFixed(3)})`;
+  mouth.style.transform = `translateY(${(2 / MOUTH_H * 100 * env).toFixed(2)}%) scale(${(1 - 0.06 * env).toFixed(3)}, ${(1 - 1.65 * env).toFixed(3)})`;
   // eyes roll
   stage.style.setProperty('--ex', (Math.cos(e * 5) * 0.9 * env).toFixed(3));
   stage.style.setProperty('--ey', (Math.sin(e * 5) * 0.6 * env).toFixed(3));
