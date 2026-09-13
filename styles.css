@@ -1,6 +1,7 @@
 /* ---------- Tokens (sampled from the portrait artwork) ---------- */
 :root{
   --bg: #F4FAFE;
+  --bg-rgb: 244, 250, 254;
   --bg-soft: #EAF3FB;
   --bg-card: #FFFFFF;
   --ink: #2A1A5E;
@@ -139,6 +140,24 @@ img{ max-width:100%; }
 .js .reveal.in-view{ opacity: 1; transform: none; }
 
 /* ---------- Nav ---------- */
+/* Frosted band behind the header. Hidden at the top of the page; once the user
+   scrolls, content dissolves into it instead of crossing the logo/MENU/Hire me.
+   The mask fades the blur out too, so there is no hard edge along the bottom. */
+.nav-scrim{
+  position: fixed; top: var(--bezel); left: var(--bezel); right: var(--bezel);
+  height: calc(var(--nav-h) + 8px);
+  z-index: 450; pointer-events: none; opacity: 0;
+  border-radius: 18px 18px 0 0;
+  transition: opacity .4s var(--ease);
+  background: linear-gradient(to bottom,
+    rgba(var(--bg-rgb), .92) 0%, rgba(var(--bg-rgb), .78) 55%, rgba(var(--bg-rgb), 0) 100%);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+.scrolled .nav-scrim{ opacity: 1; }
+
 .nav{
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display:flex; align-items:center; gap: 22px;
@@ -464,6 +483,9 @@ img{ max-width:100%; }
   .status{ text-align:left; }
   .hero-text{ order: 2; }
   .portrait-stage{ order: 1; width: min(78vw, 420px); }
+  .hero{ padding-top: calc(var(--nav-h) + 28px); }
+  /* the curved hint reaches up into the header band once the hero stacks */
+  .portrait-hint{ display: none; }
   .hero-sub{ margin-left:auto; margin-right:auto; }
   .hero-actions, .hero-meta{ justify-content:center; }
   .hero-meta li{ align-items:center; }
@@ -495,6 +517,11 @@ img{ max-width:100%; }
   .fact{ padding: 18px 16px; }
   .contact-link{ min-width: 100%; }
   .site-footer{ justify-content:center; text-align:center; }
+}
+
+/* No cursor to move, so the hint is meaningless and only risks colliding. */
+@media (hover: none), (pointer: coarse){
+  .portrait-hint{ display: none; }
 }
 
 @media (prefers-reduced-motion: reduce){

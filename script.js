@@ -31,6 +31,15 @@ overlay.querySelectorAll('.menu-item').forEach(a => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) setMenu(false); });
 
+// ---------- Header scrim: fade content into the header once the page moves ----------
+let scrimOn = false;
+function syncScrim(){
+  const on = window.scrollY > 24;
+  if (on !== scrimOn){ scrimOn = on; document.body.classList.toggle('scrolled', on); }
+}
+window.addEventListener('scroll', syncScrim, { passive: true });
+syncScrim();
+
 // ---------- Scroll reveal ----------
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
