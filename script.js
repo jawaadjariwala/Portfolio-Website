@@ -92,6 +92,7 @@ let dizzyStart = 0, dizzyUntil = 0, lastDizzyEnd = -1e9, lastQuad = -1, quadChan
 const DIZZY_MS = 3000;
 
 function noteQuadrant(dx, dy){
+  if (isTouch) return;          // taps are not a circling gesture; phones use shake
   const q = (dx < 0 ? 0 : 1) + (dy < 0 ? 0 : 2);
   if (q === lastQuad) return;
   lastQuad = q;
@@ -165,6 +166,8 @@ const needsMotionPerm = typeof DeviceOrientationEvent !== 'undefined'
 const HINT_TAP   = { text: needsMotionPerm ? 'tap, then tilt me' : 'tilt me around', offset: '16%' };
 const HINT_TILT  = { text: 'don\u2019t shake too hard please', offset: '8%' };
 const HINT_SHAKE = { text: 'ugh, why did you do that', offset: '12%' };
+const HINT_RETRY  = { text: 'tap again to allow me', offset: '12%' };
+const HINT_RELOAD = { text: 'reload, then tap to allow', offset: '10%' };
 
 let tiltBase = null, tiltLive = false, tiltAnnounced = false;
 
@@ -220,7 +223,11 @@ if (isTouch){
   if (needsMotionPerm){
     // iOS gates orientation AND motion separately, and only from a real gesture.
     stage.classList.add('is-tappable');
+    let denials = 0;
+    // iOS shows its dialog only once per page load, so a cancel has to leave a
+    // way back: retry on the next tap, then say to reload if that is refused too.
     stage.addEventListener('click', function grant(){
+      if (tiltLive) return;
       Promise.resolve(DeviceOrientationEvent.requestPermission())
         .then(res => {
           if (res !== 'granted') return null;
@@ -230,8 +237,15 @@ if (isTouch){
             : 'granted';
         })
         .then(motionRes => {
-          if (motionRes === null) return;       // orientation denied: stay as we are
+          if (motionRes === null){
+            denials++;
+            restHint = denials >= 2 ? HINT_RELOAD : HINT_RETRY;
+            setHint(restHint.text, restHint.offset);
+            return;
+          }
           enableMotion();
+          restHint = HINT_TAP;                   // until an actual tilt swaps it
+          setHint(HINT_TAP.text, HINT_TAP.offset);
           stage.classList.remove('is-tappable');
           stage.removeEventListener('click', grant);
         })
