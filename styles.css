@@ -187,6 +187,13 @@ img{ max-width:100%; }
 .feat{ position:absolute; pointer-events:none; }
 .feat img{ display:block; width:100%; height:100%; transform-origin: 50% 50%; will-change: transform; }
 .mouth img{ transform-origin: 94.5% 67.3%; }
+
+/* dizzy easter egg */
+.stars{ position:absolute; inset:0; pointer-events:none; }
+.star{ position:absolute; width: 6.5%; aspect-ratio: 1; opacity: 0; will-change: transform, opacity; }
+.star svg{ display:block; width:100%; height:100%; fill: var(--accent); stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 3px rgba(42,26,94,0.18)); }
+.star:nth-child(2) svg{ fill: #8FB4F2; }
+.star:nth-child(3) svg{ fill: #C3DFF5; }
 .brow-left{ left:32.194%; top:26.311%; width:14.838%; height:6.058%; }
 .brow-right{ left:51.079%; top:27.034%; width:15.108%; height:6.058%; }
 .mouth{ left:37.050%; top:48.553%; width:21.403%; height:4.430%; }

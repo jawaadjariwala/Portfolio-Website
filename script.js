@@ -64,7 +64,54 @@ function onPointer(clientX, clientY){
   ty = clamp((clientY - py) / (window.innerHeight * 0.35), -1, 1);
   lastPointerAt = performance.now();
   hasPointer = true;
+  noteQuadrant(clientX - px, clientY - py);
 }
+
+// ---------- Dizzy easter egg: circle the cursor around the portrait a few times ----------
+const starsBack = [...document.querySelectorAll('#starsBack .star')];
+const starsFront = [...document.querySelectorAll('#starsFront .star')];
+let dizzyStart = 0, dizzyUntil = 0, lastDizzyEnd = -1e9, lastQuad = -1, quadChanges = [];
+const DIZZY_MS = 3000;
+
+function noteQuadrant(dx, dy){
+  const q = (dx < 0 ? 0 : 1) + (dy < 0 ? 0 : 2);
+  if (q === lastQuad) return;
+  lastQuad = q;
+  const now = performance.now();
+  quadChanges = quadChanges.filter(t0 => now - t0 < 2400);
+  quadChanges.push(now);
+  if (quadChanges.length >= 7 && now > dizzyUntil && now > lastDizzyEnd + 6000){
+    dizzyStart = now; dizzyUntil = now + DIZZY_MS; quadChanges = [];
+  }
+}
+
+function renderDizzy(now){
+  const e = (now - dizzyStart) / 1000;
+  const env = e < 2.4 ? Math.min(1, e / 0.25) : Math.max(0, (3 - e) / 0.6);   // ease in, hold, ease out
+  const wob = Math.sin(e * Math.PI * 2 * 1.5) * 3.5 * env;
+  head.style.transform = `translate(${(Math.sin(e * 6.5) * 1.5 * env).toFixed(2)}px, ${(1.5 * env).toFixed(2)}px) rotate(${wob.toFixed(2)}deg)`;
+  // confused: one brow down and knitted, the other up; smile flips into a small frown
+  browLeft.style.transform  = `translateY(${(3 / BROW_H * 100 * env).toFixed(2)}%) rotate(${(5 * env).toFixed(2)}deg)`;
+  browRight.style.transform = `translateY(${(-6 / BROW_H * 100 * env).toFixed(2)}%) rotate(${(-3 * env).toFixed(2)}deg)`;
+  mouth.style.transform = `translateY(${(3 / MOUTH_H * 100 * env).toFixed(2)}%) scale(0.92, ${(1 - 1.6 * env).toFixed(3)})`;
+  // eyes roll
+  stage.style.setProperty('--ex', (Math.cos(e * 5) * 0.9 * env).toFixed(3));
+  stage.style.setProperty('--ey', (Math.sin(e * 5) * 0.6 * env).toFixed(3));
+  // three stars on an ellipse around the crown; behind the head at the back of the orbit
+  for (let i = 0; i < 3; i++){
+    const a = e * 2.4 + i * Math.PI * 2 / 3;
+    const x = 49 + 31 * Math.cos(a), y = 17 + 7 * Math.sin(a);
+    const front = Math.sin(a) > 0;
+    const s = (0.65 + 0.4 * (Math.sin(a) + 1) / 2) * env;
+    const tf = `translate(-50%, -50%) rotate(${(e * 160 + i * 40).toFixed(0)}deg) scale(${s.toFixed(3)})`;
+    [starsBack[i], starsFront[i]].forEach((el, k) => {
+      const show = (k === 1) === front;
+      el.style.opacity = show ? env.toFixed(3) : '0';
+      el.style.left = x + '%'; el.style.top = y + '%'; el.style.transform = tf;
+    });
+  }
+}
+function hideStars(){ [...starsBack, ...starsFront].forEach(el => { el.style.opacity = '0'; }); }
 
 window.addEventListener('mousemove', e => onPointer(e.clientX, e.clientY), { passive: true });
 window.addEventListener('touchmove', e => {
@@ -90,6 +137,13 @@ function frame(t){
   const ease = idle ? 0.03 : 0.09;
   cx += (gx - cx) * ease;
   cy += (gy - cy) * ease;
+
+  if (t < dizzyUntil && !reduceMotion){
+    renderDizzy(t);
+    requestAnimationFrame(frame);
+    return;
+  }
+  if (lastDizzyEnd < dizzyStart && dizzyUntil){ lastDizzyEnd = t; hideStars(); }
 
   const up = Math.max(0, -cy), down = Math.max(0, cy);
   if (!reduceMotion){
