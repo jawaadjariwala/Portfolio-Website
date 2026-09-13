@@ -103,7 +103,7 @@ function renderDizzy(now){
   // three stars on an ellipse around the crown; behind the head at the back of the orbit
   for (let i = 0; i < 3; i++){
     const a = e * 1.5 + i * Math.PI * 2 / 3;
-    const x = 49 + 31 * Math.cos(a), y = 17 + 7 * Math.sin(a);
+    const x = 49 + 27 * Math.cos(a), y = 18 + 7 * Math.sin(a);
     const front = Math.sin(a) > 0;
     const s = (0.65 + 0.4 * (Math.sin(a) + 1) / 2) * env;
     const tf = `translate(-50%, -50%) rotate(${(e * 90 + i * 40).toFixed(0)}deg) scale(${s.toFixed(3)})`;
