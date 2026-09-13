@@ -16,14 +16,8 @@ window.addEventListener('resize', fitTagline);
 const menuBtn = document.getElementById('menuBtn');
 const menuClose = document.getElementById('menuClose');
 const overlay = document.getElementById('menuOverlay');
-const overlayLogo = overlay.querySelector('.nav-logo');
 
 function setMenu(open){
-  // the reveal grows from the centre of the logo (clip-path doesn't affect layout,
-  // so the overlay's own logo has a valid rect even while the menu is closed)
-  const r = overlayLogo.getBoundingClientRect();
-  overlay.style.setProperty('--ox', (r.left + r.width / 2).toFixed(1) + 'px');
-  overlay.style.setProperty('--oy', (r.top + r.height / 2).toFixed(1) + 'px');
   overlay.classList.toggle('open', open);
   overlay.setAttribute('aria-hidden', String(!open));
   menuBtn.setAttribute('aria-expanded', String(open));
