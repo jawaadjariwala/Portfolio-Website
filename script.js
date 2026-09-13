@@ -170,8 +170,7 @@ const HINT_TAP   = { text: needsMotionPerm ? 'tap, then tilt me' : 'tilt me arou
 const HINT_TILT  = { text: 'don\u2019t shake too hard please', offset: '8%' };
 const HINT_SHAKE = { text: 'ugh\u2026 why !', offset: '26%' };
 const HINT_RETRY  = { text: 'tap again to allow me', offset: '12%' };
-const HINT_RELOAD = { text: 'reload, then tap to allow', offset: '10%' };
-const HINT_BLOCKED = { text: 'motion is off in safari', offset: '11%' };
+const HINT_BLOCKED = { text: 'motion is off in settings', offset: '10%' };
 
 let tiltBase = null, tiltLive = false, tiltAnnounced = false;
 
@@ -252,7 +251,12 @@ if (isTouch){
               if (help) help.hidden = false;
             } else {
               denials++;
-              restHint = denials >= 2 ? HINT_RELOAD : HINT_RETRY;
+              restHint = HINT_RETRY;
+              if (denials >= 2){
+                restHint = HINT_BLOCKED;
+                const help2 = document.getElementById('motionHelp');
+                if (help2) help2.hidden = false;
+              }
             }
             setHint(restHint.text, restHint.offset);
             return;
