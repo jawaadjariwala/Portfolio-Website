@@ -188,7 +188,9 @@ img{ max-width:100%; }
 .hero-sub strong{ color: var(--ink); }
 .hero-sub strong{ font-weight: 700; }
 .hero-sub em{ font-style: italic; color: var(--ink); }
-.hero-actions{ display:flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+.hero-actions{ display:flex; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
+.hero-note{ display:inline-flex; align-items:center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; font-weight: 600; letter-spacing: .01em; color: var(--ink-soft); }
+.hero-note-sep{ width: 4px; height: 4px; border-radius: 50%; background: var(--blue); opacity: .9; }
 .hero-meta{ display:flex; gap: 28px; flex-wrap: wrap; font-size: 14px; color: var(--ink); font-weight: 500; }
 .hero-meta li{ display:flex; flex-direction:column; gap: 2px; }
 .hero-meta span{ font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; }
