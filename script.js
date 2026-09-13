@@ -12,27 +12,30 @@ function fitTagline(){
 document.fonts.ready.then(fitTagline);
 window.addEventListener('resize', fitTagline);
 
-// ---------- Nav ----------
-const nav = document.getElementById('nav');
-const navToggle = document.getElementById('navToggle');
-const navLinks = document.getElementById('navLinks');
+// ---------- Menu ----------
+const menuBtn = document.getElementById('menuBtn');
+const menuClose = document.getElementById('menuClose');
+const overlay = document.getElementById('menuOverlay');
+const overlayLogo = overlay.querySelector('.nav-logo');
 
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 10);
-}, { passive: true });
+function setMenu(open){
+  // the reveal grows from the centre of the logo (clip-path doesn't affect layout,
+  // so the overlay's own logo has a valid rect even while the menu is closed)
+  const r = overlayLogo.getBoundingClientRect();
+  overlay.style.setProperty('--ox', (r.left + r.width / 2).toFixed(1) + 'px');
+  overlay.style.setProperty('--oy', (r.top + r.height / 2).toFixed(1) + 'px');
+  overlay.classList.toggle('open', open);
+  overlay.setAttribute('aria-hidden', String(!open));
+  menuBtn.setAttribute('aria-expanded', String(open));
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+}
 
-navToggle.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  navToggle.classList.toggle('open', open);
-  navToggle.setAttribute('aria-expanded', String(open));
+menuBtn.addEventListener('click', () => setMenu(true));
+menuClose.addEventListener('click', () => setMenu(false));
+overlay.querySelectorAll('.menu-item').forEach(a => {
+  a.addEventListener('click', () => setMenu(false));
 });
-navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) setMenu(false); });
 
 // ---------- Scroll reveal ----------
 const io = new IntersectionObserver((entries) => {
