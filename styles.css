@@ -39,12 +39,11 @@ body{
 ::selection{ background: var(--blue); color: var(--ink); }
 
 h1,h2,h3{
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Bitter', Georgia, serif;
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.08;
   margin: 0;
-  letter-spacing: -0.015em;
-  font-variation-settings: 'opsz' 144;
+  letter-spacing: -0.01em;
 }
 p{ margin: 0; }
 a{ color: inherit; text-decoration: none; }
@@ -134,7 +133,7 @@ img{ max-width:100%; }
 .nav.scrolled{ border-bottom-color: var(--line); box-shadow: 0 6px 24px rgba(42,26,94,0.05); padding: 12px 32px; }
 .nav-logo{
   position: relative;
-  font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px;
+  font-family: 'Bitter', serif; font-weight: 700; font-size: 20px;
   width: 42px; height: 42px; display:flex; align-items:center; justify-content:center;
   background: var(--ink); color: var(--bg); border-radius: 13px;
   transition: transform .35s var(--ease);
@@ -175,13 +174,16 @@ img{ max-width:100%; }
 .status-dot{ width: 8px; height: 8px; border-radius: 50%; background: #2FBF71; box-shadow: 0 0 0 0 rgba(47,191,113,.5); animation: pulse 2.2s infinite; }
 @keyframes pulse{ 0%{ box-shadow: 0 0 0 0 rgba(47,191,113,.55);} 70%{ box-shadow: 0 0 0 9px rgba(47,191,113,0);} 100%{ box-shadow: 0 0 0 0 rgba(47,191,113,0);} }
 
-.hero-text h1{ font-size: clamp(2.6rem, 5.6vw, 4.5rem); margin-bottom: 24px; }
+.hero-text h1{ font-size: clamp(3rem, 6.4vw, 5.2rem); font-weight: 300; line-height: 1.05; margin-bottom: 26px; }
+.h1-name{ font-weight: 700; }
+.h1-dot{ color: var(--accent); }
 .highlight{
   color: var(--accent);
   background: linear-gradient(90deg, var(--accent), #8B5CF6 60%, #5B8DEF);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
-.hero-sub{ max-width: 500px; font-size: 18px; color: var(--ink-soft); margin-bottom: 34px; }
+.hero-sub{ max-width: 520px; font-family: 'Bitter', Georgia, serif; font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.5; color: var(--ink); margin-bottom: 34px; }
+.hero-sub strong{ font-weight: 700; }
 .hero-sub em{ font-style: italic; color: var(--ink); }
 .hero-actions{ display:flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
 .hero-meta{ display:flex; gap: 28px; flex-wrap: wrap; font-size: 14px; color: var(--ink); font-weight: 500; }
@@ -279,7 +281,7 @@ img{ max-width:100%; }
   box-shadow: var(--shadow-sm); transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .fact:hover{ transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.fact-num{ font-family:'Fraunces', serif; font-size: 2.8rem; line-height: 1; color: var(--accent); font-weight: 600; }
+.fact-num{ font-family:'Bitter', serif; font-size: 2.8rem; line-height: 1; color: var(--accent); font-weight: 600; }
 .fact-num sup{ font-size: .5em; vertical-align: super; }
 .fact-label{ font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
 
@@ -295,7 +297,7 @@ img{ max-width:100%; }
 .project:hover{ transform: translateY(-5px); box-shadow: var(--shadow-lg); }
 .project:nth-child(even){ grid-template-columns: 1fr 1.35fr; }
 .project-top{ display:flex; align-items:center; gap: 14px; margin-bottom: 14px; }
-.project-index{ font-family: 'Fraunces', serif; font-size: 13px; color: var(--ink-soft); letter-spacing: .04em; }
+.project-index{ font-family: 'Bitter', serif; font-size: 13px; color: var(--ink-soft); letter-spacing: .04em; }
 .project-tag{ font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
 .project h3{ font-size: 1.75rem; margin-bottom: 14px; }
 .project p{ color: var(--ink-soft); margin-bottom: 20px; max-width: 56ch; }
@@ -326,7 +328,7 @@ img{ max-width:100%; }
 .fig-b{ background: linear-gradient(135deg, #3F2A9E 0%, #5B4BC4 55%, #7FA6E8 100%); }
 .fig-c{ background: linear-gradient(135deg, #2A1A5E 0%, #4B3A93 60%, #6D6BC7 100%); }
 .figure-kicker{ font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
-.figure-stat{ font-family:'Fraunces', serif; font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1.12; font-weight: 600; }
+.figure-stat{ font-family:'Bitter', serif; font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1.12; font-weight: 600; }
 .figure-foot{ font-size: 13px; opacity: .85; }
 
 /* ---------- Experience ---------- */
