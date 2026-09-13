@@ -326,6 +326,16 @@ img{ max-width:100%; }
 .portrait-hint.is-swapping{ opacity: 0; }
 /* On phones the portrait itself is the tap target that asks for motion access. */
 .portrait-stage.is-tappable{ cursor: pointer; -webkit-tap-highlight-color: transparent; }
+/* Phones read the eyes from further away and tilt is a coarser input than a
+   cursor, so the irises travel further there. */
+@media (hover: none), (pointer: coarse){
+  :root{ --eye-travel: 10%; }
+}
+.motion-help{
+  max-width: 30ch; margin: 22px auto 0; text-align: center;
+  font-size: 13px; line-height: 1.5; color: var(--ink-soft);
+}
+.motion-help strong{ color: var(--ink); font-weight: 600; }
 
 /* dizzy easter egg */
 .stars{ position:absolute; inset:0; pointer-events:none; }
@@ -340,7 +350,7 @@ img{ max-width:100%; }
 .eye{ position:absolute; overflow:hidden; pointer-events:none; }
 .eye img{
   display:block; width:100%; height:100%;
-  transform: translate(calc(var(--ex, 0) * 6%), calc(var(--ey, 0) * 6%));
+  transform: translate(calc(var(--ex, 0) * var(--eye-travel, 6%)), calc(var(--ey, 0) * var(--eye-travel, 6%)));
   will-change: transform;
 }
 .eye--left{ left:34.892%; top:33.363%; width:10.432%; height:4.159%;

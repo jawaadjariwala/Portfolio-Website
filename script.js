@@ -65,6 +65,9 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 
 // Native (source-pixel) sizes of the feature crops, so travel can be expressed in % of each crop.
 const BROW_H = 67, MOUTH_H = 49;
+// Tilting a phone is coarser than moving a cursor, so the head travels a little
+// further there. Kept under 1 degree of tilt, the envelope verified as seam-safe.
+const HEAD_GAIN = window.matchMedia('(hover: none), (pointer: coarse)').matches ? 1.35 : 1;
 
 let tx = 0, ty = 0;        // target pointer position, -1..1
 let cx = 0, cy = 0;        // current (lerped)
@@ -165,9 +168,10 @@ const needsMotionPerm = typeof DeviceOrientationEvent !== 'undefined'
 
 const HINT_TAP   = { text: needsMotionPerm ? 'tap, then tilt me' : 'tilt me around', offset: '16%' };
 const HINT_TILT  = { text: 'don\u2019t shake too hard please', offset: '8%' };
-const HINT_SHAKE = { text: 'ugh, why did you do that', offset: '12%' };
+const HINT_SHAKE = { text: 'ugh\u2026 why !', offset: '26%' };
 const HINT_RETRY  = { text: 'tap again to allow me', offset: '12%' };
 const HINT_RELOAD = { text: 'reload, then tap to allow', offset: '10%' };
+const HINT_BLOCKED = { text: 'motion is off in safari', offset: '11%' };
 
 let tiltBase = null, tiltLive = false, tiltAnnounced = false;
 
@@ -181,8 +185,8 @@ function onTilt(e){
   // People hold a phone at roughly 45 degrees, so the first reading is neutral.
   if (!tiltBase){ tiltBase = { lr: lr, fb: fb }; return; }
   const dlr = lr - tiltBase.lr, dfb = fb - tiltBase.fb;
-  tx = clamp(dlr / 22, -1, 1);          // ~22 deg of tilt is full deflection
-  ty = clamp(dfb / 22, -1, 1);
+  tx = clamp(dlr / 12, -1, 1);          // ~12 deg of tilt is full deflection
+  ty = clamp(dfb / 12, -1, 1);
   lastPointerAt = performance.now();
   hasPointer = true;
   if (!tiltAnnounced && (Math.abs(dlr) > 8 || Math.abs(dfb) > 8)){
@@ -228,6 +232,7 @@ if (isTouch){
     // way back: retry on the next tap, then say to reload if that is refused too.
     stage.addEventListener('click', function grant(){
       if (tiltLive) return;
+      const askedAt = performance.now();
       Promise.resolve(DeviceOrientationEvent.requestPermission())
         .then(res => {
           if (res !== 'granted') return null;
@@ -238,8 +243,17 @@ if (isTouch){
         })
         .then(motionRes => {
           if (motionRes === null){
-            denials++;
-            restHint = denials >= 2 ? HINT_RELOAD : HINT_RETRY;
+            // A dialog a human dismissed takes time; an instant refusal means iOS
+            // never showed one (permission already denied for the site, or Motion
+            // & Orientation Access is off in Safari's settings).
+            if (performance.now() - askedAt < 350){
+              restHint = HINT_BLOCKED;
+              const help = document.getElementById('motionHelp');
+              if (help) help.hidden = false;
+            } else {
+              denials++;
+              restHint = denials >= 2 ? HINT_RELOAD : HINT_RETRY;
+            }
             setHint(restHint.text, restHint.offset);
             return;
           }
@@ -296,9 +310,9 @@ function frame(t){
     // Head only (cut at the jaw); the neck is static. Pivot at the chin, so the jaw corners move
     // almost purely vertically — a vertical nudge never shows at the neck lines. Sideways travel is
     // kept sub-pixel so the jaw never slides across them.
-    const headX = cx * 0.6;
-    const headY = cy < 0 ? cy * 1 : cy * 3;
-    const tilt = -cx * 0.7;
+    const headX = cx * 0.6 * HEAD_GAIN;
+    const headY = (cy < 0 ? cy * 1 : cy * 3) * HEAD_GAIN;
+    const tilt = -cx * 0.7 * HEAD_GAIN;
     head.style.transform = `translate(${headX.toFixed(2)}px, ${headY.toFixed(2)}px) rotate(${tilt.toFixed(2)}deg)`;
 
     // Brows only ever move UP (away from the glasses).
