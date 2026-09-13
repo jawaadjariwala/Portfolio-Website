@@ -166,14 +166,13 @@ img{ max-width:100%; }
   transition: opacity .2s ease;
 }
 .hire:hover{ opacity: .7; }
-.hire-icon{ display:block; width: 30px; height: 30px; overflow: visible; flex: none; }
+.hire-icon{ display:block; width: 34px; height: 34px; overflow: visible; flex: none; position: relative; top: 3px; }
 .hire-fill{ fill: var(--blue); }
 .hire-outline{ fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linejoin: round; }
 .hire-label{
   font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
   letter-spacing: .22em; text-transform: uppercase; color: var(--ink);
 }
-.hire:hover .hire-icon{ transform: rotate(-6deg); transition: transform .3s var(--ease); }
 /* on the blue overlay the fill merges into the background, leaving the outline */
 .menu-overlay .hire-fill{ fill: var(--blue); }
 .menu-head .hire{ opacity: 0; transform: translateX(10px); transition: opacity .2s ease, transform .2s ease; }
