@@ -139,7 +139,6 @@ img{ max-width:100%; }
   transition: transform .35s var(--ease);
 }
 .nav-logo:hover{ transform: rotate(-6deg) scale(1.05); }
-.nav-logo-dot{ position:absolute; right:-3px; top:-3px; width: 10px; height: 10px; border-radius:50%; background: var(--accent); border: 2px solid var(--bg); }
 .nav-links{ display:flex; align-items:center; gap: 28px; }
 .nav-links a:not(.btn){ font-weight: 600; font-size: 14.5px; color: var(--ink); position: relative; opacity: .85; transition: opacity .2s; }
 .nav-links a:not(.btn):hover{ opacity: 1; }
