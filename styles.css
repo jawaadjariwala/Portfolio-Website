@@ -324,6 +324,8 @@ img{ max-width:100%; }
   transition: opacity .2s ease;
 }
 .portrait-hint.is-swapping{ opacity: 0; }
+/* On phones the portrait itself is the tap target that asks for motion access. */
+.portrait-stage.is-tappable{ cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
 /* dizzy easter egg */
 .stars{ position:absolute; inset:0; pointer-events:none; }
@@ -483,9 +485,8 @@ img{ max-width:100%; }
   .status{ text-align:left; }
   .hero-text{ order: 2; }
   .portrait-stage{ order: 1; width: min(78vw, 420px); }
-  .hero{ padding-top: calc(var(--nav-h) + 28px); }
-  /* the curved hint reaches up into the header band once the hero stacks */
-  .portrait-hint{ display: none; }
+  /* Enough clearance that the curved hint above his head cannot reach the header. */
+  .hero{ padding-top: calc(var(--nav-h) + 56px); }
   .hero-sub{ margin-left:auto; margin-right:auto; }
   .hero-actions, .hero-meta{ justify-content:center; }
   .hero-meta li{ align-items:center; }
@@ -510,18 +511,14 @@ img{ max-width:100%; }
   .menu-socials{ margin-bottom: 32px; }
   .menu-item{ grid-template-columns: 1fr; align-items: start; gap: 4px; padding: 12px 0; }
   .menu-item-desc{ padding-bottom: 0; }
-  .hero{ padding: var(--nav-h) 20px 60px; }
+  /* shorthand would reset the clearance set at 960px, so restate it */
+  .hero{ padding: calc(var(--nav-h) + 72px) 20px 60px; }
   .scroll-cue{ display:none; }
   .section-inner{ padding: 0 20px; }
   .facts-row{ grid-template-columns: 1fr 1fr; gap: 10px; }
   .fact{ padding: 18px 16px; }
   .contact-link{ min-width: 100%; }
   .site-footer{ justify-content:center; text-align:center; }
-}
-
-/* No cursor to move, so the hint is meaningless and only risks colliding. */
-@media (hover: none), (pointer: coarse){
-  .portrait-hint{ display: none; }
 }
 
 @media (prefers-reduced-motion: reduce){

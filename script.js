@@ -138,15 +138,108 @@ function hideStars(){ [...starsBack, ...starsFront].forEach(el => { el.style.opa
 // The curved hint swaps to "be gentle!" while dizzy, then back.
 const hint = document.querySelector('.portrait-hint');
 const hintText = document.querySelector('.portrait-hint textPath');
-const HINT_DEFAULT = { text: hintText.textContent, offset: hintText.getAttribute('startOffset') };
-function setHint(text, offset){
+const HINT_DEFAULT = { text: hintText.textContent, offset: hintText.getAttribute('startOffset'), len: '88' };
+// Whichever line the hint returns to once a reaction finishes. On a phone this
+// advances from "tap, then tilt me" to the shake bait once he has been tilted.
+let restHint = HINT_DEFAULT;
+
+function writeHint(h){
+  hintText.textContent = h.text;
+  hintText.setAttribute('startOffset', h.offset);
+  if (h.len) hintText.setAttribute('textLength', h.len); else hintText.removeAttribute('textLength');
+}
+function setHint(text, offset, len){
   hint.classList.add('is-swapping');
   setTimeout(() => {
-    hintText.textContent = text;
-    hintText.setAttribute('startOffset', offset);
-    if (text === HINT_DEFAULT.text) hintText.setAttribute('textLength', '88'); else hintText.removeAttribute('textLength');
+    writeHint({ text: text, offset: offset, len: len || (text === HINT_DEFAULT.text ? '88' : null) });
     hint.classList.remove('is-swapping');
   }, 200);
+}
+
+// ---------- Phones: tilt to look around, shake to confuse ----------
+// Feeds the same tx/ty the mouse does, so the rig itself is unchanged.
+const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+const needsMotionPerm = typeof DeviceOrientationEvent !== 'undefined'
+  && typeof DeviceOrientationEvent.requestPermission === 'function';
+
+const HINT_TAP   = { text: needsMotionPerm ? 'tap, then tilt me' : 'tilt me around', offset: '16%' };
+const HINT_TILT  = { text: 'don\u2019t shake too hard please', offset: '8%' };
+const HINT_SHAKE = { text: 'ugh, why did you do that', offset: '12%' };
+
+let tiltBase = null, tiltLive = false, tiltAnnounced = false;
+
+function onTilt(e){
+  if (e.beta == null && e.gamma == null) return;
+  // Re-map the axes when the phone is held in landscape.
+  const angle = (screen.orientation && screen.orientation.angle) || window.orientation || 0;
+  let lr = e.gamma || 0, fb = e.beta || 0;
+  if (angle === 90){ const t = lr; lr = fb; fb = -t; }
+  else if (angle === 270 || angle === -90){ const t = lr; lr = -fb; fb = t; }
+  // People hold a phone at roughly 45 degrees, so the first reading is neutral.
+  if (!tiltBase){ tiltBase = { lr: lr, fb: fb }; return; }
+  const dlr = lr - tiltBase.lr, dfb = fb - tiltBase.fb;
+  tx = clamp(dlr / 22, -1, 1);          // ~22 deg of tilt is full deflection
+  ty = clamp(dfb / 22, -1, 1);
+  lastPointerAt = performance.now();
+  hasPointer = true;
+  if (!tiltAnnounced && (Math.abs(dlr) > 8 || Math.abs(dfb) > 8)){
+    tiltAnnounced = true;
+    restHint = HINT_TILT;
+    setHint(HINT_TILT.text, HINT_TILT.offset);
+  }
+}
+
+let lastMag = null, shakeHits = [];
+function onShake(e){
+  const a = e.accelerationIncludingGravity;
+  if (!a) return;
+  const mag = Math.sqrt((a.x || 0) ** 2 + (a.y || 0) ** 2 + (a.z || 0) ** 2);
+  const now = performance.now();
+  if (lastMag !== null && Math.abs(mag - lastMag) > 12){
+    shakeHits = shakeHits.filter(t0 => now - t0 < 900);
+    shakeHits.push(now);
+    if (shakeHits.length >= 4 && now > dizzyUntil && now > lastDizzyEnd + 4000){
+      shakeHits = [];
+      dizzyStart = now; dizzyUntil = now + DIZZY_MS;
+      setHint(HINT_SHAKE.text, HINT_SHAKE.offset);
+    }
+  }
+  lastMag = mag;
+}
+
+function enableMotion(){
+  if (tiltLive) return;
+  tiltLive = true;
+  window.addEventListener('deviceorientation', onTilt, { passive: true });
+  window.addEventListener('devicemotion', onShake, { passive: true });
+}
+
+if (isTouch){
+  restHint = HINT_TAP;
+  writeHint(HINT_TAP);
+  if (needsMotionPerm){
+    // iOS gates orientation AND motion separately, and only from a real gesture.
+    stage.classList.add('is-tappable');
+    stage.addEventListener('click', function grant(){
+      Promise.resolve(DeviceOrientationEvent.requestPermission())
+        .then(res => {
+          if (res !== 'granted') return null;
+          return (typeof DeviceMotionEvent !== 'undefined'
+            && typeof DeviceMotionEvent.requestPermission === 'function')
+            ? DeviceMotionEvent.requestPermission().catch(() => 'denied')
+            : 'granted';
+        })
+        .then(motionRes => {
+          if (motionRes === null) return;       // orientation denied: stay as we are
+          enableMotion();
+          stage.classList.remove('is-tappable');
+          stage.removeEventListener('click', grant);
+        })
+        .catch(() => {});                        // unsupported: idle wander continues
+    });
+  } else {
+    enableMotion();                              // Android over HTTPS needs no prompt
+  }
 }
 
 window.addEventListener('mousemove', e => onPointer(e.clientX, e.clientY), { passive: true });
@@ -179,7 +272,7 @@ function frame(t){
     requestAnimationFrame(frame);
     return;
   }
-  if (lastDizzyEnd < dizzyStart && dizzyUntil){ lastDizzyEnd = t; hideStars(); setHint(HINT_DEFAULT.text, HINT_DEFAULT.offset); }
+  if (lastDizzyEnd < dizzyStart && dizzyUntil){ lastDizzyEnd = t; hideStars(); setHint(restHint.text, restHint.offset, restHint.len); }
 
   const up = Math.max(0, -cy), down = Math.max(0, cy);
   if (!reduceMotion){
