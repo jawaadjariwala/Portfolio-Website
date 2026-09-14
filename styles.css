@@ -444,17 +444,21 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .fact-label{ font-size: 14px; color: var(--subtext); line-height: 1.45; }
 
 /* ---------- Work ---------- */
-.project-list{ display:flex; flex-direction:column; gap: 0; }
+.project-list{ display:flex; flex-direction:column; gap: 0; position: relative; }
+/* A single line threading the drawings together, drawn as you scroll. It sits
+   behind everything, so it disappears under each opaque drawing it reaches. */
+.work-thread{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:0; }
+.work-thread path{ fill:none; stroke: var(--line); stroke-width:2; stroke-linecap:round; opacity:.45; }
 /* Open rows on the page's own surface, separated by a hairline. */
 .project{
-  padding: 60px 0;
+  padding: 70px 0;
   display:grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 72px; align-items:start;
-  border-top: 1px solid var(--rule);
+  position: relative; z-index: 1;
 }
-.project:first-child{ border-top: 0; padding-top: 8px; }
+.project:first-of-type{ padding-top: 8px; }
 /* 01 writes on the left and draws on the right; 02 swaps; and so on. */
-.project:nth-child(even){ grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
-.project:nth-child(even) .project-info{ order: 2; }
+.project:nth-of-type(even){ grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+.project:nth-of-type(even) .project-info{ order: 2; }
 .project-top{ display:flex; align-items:center; gap: 18px; margin-bottom: 18px; }
 .project-index{
   font-family: 'Bitter', serif; font-size: 2.5rem; font-weight: 600; line-height: 1;
@@ -474,17 +478,20 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 
 /* The margin column: the facts a recruiter scans for, then a drawing
    floating in the whitespace — no frame, no box. */
-.project-margin{ display:flex; flex-direction:column; gap: 22px; padding-top: 16px; }
+/* The margin column holds only the drawing, so the thread has a clear run. */
+.project-margin{ display:flex; flex-direction:column; padding-top: 10px; }
 .fact-line{
   display:grid; grid-template-columns: 104px 1fr; gap: 18px; align-items: baseline;
   color: var(--subtext); font-size: 15px; line-height: 1.5;
+  margin-bottom: 14px; max-width: 52ch;
 }
+.fact-line:last-of-type{ margin-bottom: 26px; }
 .fact-line strong{ color: var(--text); font-weight: 600; }
 /* The drawings: generated as black line + flat grey on white, then split into
    two alpha masks (source/build-illos.py) so the page paints them live from
    the section palette. A lighter second grey lands as a tint of the fill. */
-.illo{ position: relative; width: min(100%, 300px); margin-top: 22px; }
-.project:nth-child(odd) .illo{ align-self: flex-end; }
+.illo{ position: relative; width: min(100%, 300px); }
+.project:nth-of-type(odd) .illo{ align-self: flex-end; }
 .illo i{ position: absolute; inset: 0; display: block; }
 .illo-line, .illo-fill, .illo-paper{
   -webkit-mask-image: var(--src); mask-image: var(--src);
@@ -501,7 +508,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   left: auto; right: -14%; top: -16%; bottom: auto; width: 62%; aspect-ratio: 1; border-radius: 50%;
   background: repeating-linear-gradient(-45deg, var(--fill) 0 2px, transparent 2px 9px);
 }
-.project:nth-child(even) .illo-hatch{ right: auto; left: -14%; }
+.project:nth-of-type(even) .illo-hatch{ right: auto; left: -14%; }
 .illo--blindspot{ aspect-ratio: 900 / 622; }
 .illo--blindspot .illo-line{ --src: url('assets/illo-blindspot-line.webp?v=73'); }
 .illo--blindspot .illo-fill{ --src: url('assets/illo-blindspot-fill.webp?v=73'); }
@@ -603,11 +610,11 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .about-points li{ grid-template-columns: 1fr; gap: 6px; }
   .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
   .facts-row{ grid-template-columns: repeat(2, 1fr); }
-  .project, .project:nth-child(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
-  .project:nth-child(even) .project-info{ order: 0; }
+  .project, .project:nth-of-type(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
+  .project:nth-of-type(even) .project-info{ order: 0; }
   .project-margin{ padding-top: 0; }
   .fact-line{ grid-template-columns: 1fr; gap: 4px; }
-  .illo{ align-self: flex-start !important; margin-top: 6px; }
+  .illo{ align-self: flex-start !important; margin-top: 10px; }
   .tl-item{ grid-template-columns: 1fr; gap: 8px; }
   .section{ padding: 90px 0; }
   .section-head{ flex-direction: column; align-items:flex-start; margin-bottom: 40px; }

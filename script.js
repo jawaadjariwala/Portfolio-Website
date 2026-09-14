@@ -48,6 +48,60 @@ function syncTheme(){
   }
   if (name !== currentTheme){ currentTheme = name; document.documentElement.dataset.theme = name; }
 }
+// ---------- Work thread: one line linking the drawings, drawn as you scroll ----------
+const thread = document.getElementById('workThread');
+const threadPath = thread && thread.querySelector('path');
+const threadReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let threadLen = 0;
+
+function layoutThread(){
+  if (!threadPath) return;
+  const list = thread.parentElement, lr = list.getBoundingClientRect();
+  const rows = [...list.querySelectorAll('.project')].filter(r => r.querySelector('.illo'));
+  const pts = rows.map(r => {
+    const b = r.querySelector('.illo').getBoundingClientRect();
+    return { x: b.left - lr.left + b.width / 2, y: b.top - lr.top + b.height / 2 };
+  });
+  if (pts.length < 2 || lr.width < 560){ thread.style.display = 'none'; return; }
+  thread.style.display = '';
+  thread.setAttribute('viewBox', '0 0 ' + Math.round(lr.width) + ' ' + Math.round(lr.height));
+  // Each hop leaves a drawing heading straight down its own column, turns
+  // horizontal to cross the page in the empty band between two rows, then
+  // straightens again to arrive at the next drawing from above. The row
+  // boundary is the middle of that band, so the crossing never meets text.
+  const n = (v) => v.toFixed(1);
+  let d = 'M ' + n(pts[0].x) + ' ' + n(pts[0].y);
+  for (let i = 1; i < pts.length; i++){
+    const a = pts[i - 1], b = pts[i];
+    const gapY = rows[i].getBoundingClientRect().top - lr.top;
+    const midX = (a.x + b.x) / 2;
+    // long horizontal arms and short vertical ones, so each turn is a sweep
+    // rather than a kink
+    const h = Math.max(Math.abs(b.x - a.x) * 0.5, 90);
+    d += ' C ' + n(a.x) + ' ' + n(a.y + (gapY - a.y) * 0.45) + ', ' + n(midX - h) + ' ' + n(gapY) + ', ' + n(midX) + ' ' + n(gapY);
+    d += ' C ' + n(midX + h) + ' ' + n(gapY) + ', ' + n(b.x) + ' ' + n(b.y - (b.y - gapY) * 0.45) + ', ' + n(b.x) + ' ' + n(b.y);
+  }
+  threadPath.setAttribute('d', d);
+  threadLen = threadPath.getTotalLength();
+  threadPath.style.strokeDasharray = threadLen;
+  syncThread();
+}
+
+function syncThread(){
+  if (!threadPath || !threadLen) return;
+  if (threadReduced){ threadPath.style.strokeDashoffset = '0'; return; }
+  const r = thread.parentElement.getBoundingClientRect(), vh = window.innerHeight;
+  const p = (vh * 0.85 - r.top) / (r.height + vh * 0.35);
+  threadPath.style.strokeDashoffset = (threadLen * (1 - clamp(p, 0, 1))).toFixed(1);
+}
+
+if (threadPath){
+  window.addEventListener('resize', layoutThread);
+  window.addEventListener('load', layoutThread);
+  document.fonts.ready.then(layoutThread);
+  layoutThread();
+}
+
 // ---------- Timeline rail: drawn from 0 to 1 as the timeline crosses the viewport ----------
 const timeline = document.querySelector('.timeline');
 // (reduceMotion is declared further down, after this block has already run once)
@@ -60,7 +114,7 @@ function syncTimeline(){
   const p = (vh * 0.8 - r.top) / (r.height + vh * 0.25);
   timeline.style.setProperty('--tl-progress', clamp(p, 0, 1).toFixed(3));
 }
-function onScroll(){ syncScrim(); syncTheme(); syncTimeline(); }
+function onScroll(){ syncScrim(); syncTheme(); syncTimeline(); syncThread(); }
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', syncTheme);
 onScroll();
