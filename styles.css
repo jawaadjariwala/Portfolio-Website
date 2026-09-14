@@ -157,6 +157,17 @@ img{ max-width:100%; }
 .js .intro-ready .portrait-hint.intro{ animation-name: introFade; }
 @keyframes introFade{ from{ opacity:0; } to{ opacity:.78; } }
 
+/* ---------- Cursor ----------
+   The arrow, drawn in the page's line colour, with its fill lagging behind
+   and settling into the usual offset when the pointer rests. Over a link the
+   fill snaps into register with the outline. Desktop fine pointers only. */
+html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
+.cursor{ position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 1000; pointer-events: none; opacity: 0; transition: opacity .25s ease; }
+.cursor.is-on{ opacity: 1; }
+.cursor svg{ position: absolute; left: 0; top: 0; width: 24px; height: 24px; overflow: visible; will-change: transform; }
+.cursor-fill path{ fill: var(--fill); }
+.cursor-line path{ fill: none; stroke: var(--line); stroke-width: 2; stroke-linejoin: round; }
+
 /* ---------- Reveal ---------- */
 .js .reveal{ opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
 .js .reveal.in-view{ opacity: 1; transform: none; }

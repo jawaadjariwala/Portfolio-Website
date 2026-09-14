@@ -302,6 +302,36 @@ if (isTouch){
   }
 }
 
+// ---------- Cursor: the outline rides the real pointer; the fill chases it ----------
+const cursorEl = document.getElementById('cursor');
+const cursorOK = !!cursorEl && !reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+let curX = -100, curY = -100, fillX = -100, fillY = -100, curScale = 1, overLink = false;
+if (cursorOK){
+  document.documentElement.classList.add('has-cursor');
+  const lineSvg = cursorEl.querySelector('.cursor-line'), fillSvg = cursorEl.querySelector('.cursor-fill');
+  window.addEventListener('mousemove', e => {
+    curX = e.clientX; curY = e.clientY;
+    overLink = !!(e.target && e.target.closest && e.target.closest('a, button, [role="button"], .is-tappable'));
+    // the outline moves with zero lag, straight from the event
+    lineSvg.style.transform = `translate(${curX}px, ${curY}px) scale(${curScale.toFixed(3)})`;
+    cursorEl.classList.add('is-on');
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => cursorEl.classList.remove('is-on'));
+  document.addEventListener('mouseenter', () => cursorEl.classList.add('is-on'));
+  window.__cursorTick = function(){
+    // resting offset is the print device (3px down-right); over a link it snaps into register
+    const ox = overLink ? 0 : 3, oy = overLink ? 0 : 3;
+    fillX += (curX + ox - fillX) * 0.3;
+    fillY += (curY + oy - fillY) * 0.3;
+    // "overflows a bit": cap how far the fill may trail so it never detaches
+    const dx = fillX - curX, dy = fillY - curY, d = Math.hypot(dx, dy), cap = 26;
+    if (d > cap){ fillX = curX + dx / d * cap; fillY = curY + dy / d * cap; }
+    curScale += ((overLink ? 1.18 : 1) - curScale) * 0.2;
+    fillSvg.style.transform = `translate(${fillX.toFixed(2)}px, ${fillY.toFixed(2)}px) scale(${curScale.toFixed(3)})`;
+    lineSvg.style.transform = `translate(${curX}px, ${curY}px) scale(${curScale.toFixed(3)})`;
+  };
+}
+
 window.addEventListener('mousemove', e => onPointer(e.clientX, e.clientY), { passive: true });
 window.addEventListener('touchmove', e => {
   if (e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY);
@@ -326,6 +356,7 @@ function frame(t){
   const ease = idle ? 0.03 : 0.09;
   cx += (gx - cx) * ease;
   cy += (gy - cy) * ease;
+  if (window.__cursorTick) window.__cursorTick();
   // offset fills across the page lean toward the cursor
   mx += (mxT - mx) * 0.06; my += (myT - my) * 0.06;
   if (!reduceMotion){
