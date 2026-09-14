@@ -207,7 +207,6 @@ img{ max-width:100%; }
 /* ---------- Menu overlay ---------- */
 .menu-overlay{
   position: fixed; inset: 0; z-index: 800; overflow-y: auto;
-  display: flex; flex-direction: column;
   background: var(--blue);
   visibility: hidden;
   transform: translateY(-100%);
@@ -222,9 +221,7 @@ img{ max-width:100%; }
 /* Vertical metrics below the head scale with viewport height so the last item
    never falls past the fold on a laptop. */
 .menu-inner{ margin: 0; padding: clamp(18px, 4vh, 46px) var(--inset) clamp(28px, 7vh, 80px); width: 100%;
-  /* Sit the socials and the four items optically centred in whatever space
-     is left below the head, rather than hugging the top of a tall screen. */
-  flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; }
+}
 
 .menu-socials{ display:flex; align-items:center; gap: 24px; margin-bottom: clamp(24px, 7vh, 84px); }
 .menu-rule{ width: 74px; height: 2px; background: var(--accent); border-radius: 2px; margin-right: 8px; }
