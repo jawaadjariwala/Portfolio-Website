@@ -37,6 +37,25 @@
   color-scheme: light;
 }
 
+/* ---------- Section themes ----------
+   Registering the tokens lets them transition, so the page bleeds from one
+   palette to the next as a section crosses the middle of the viewport
+   (script.js sets data-theme on <html>). Grounds stay near-white, as on
+   robbowen.digital: the identity comes from the fill and the linework. */
+@property --line    { syntax: '<color>'; inherits: true; initial-value: #6D2CF2; }
+@property --fill    { syntax: '<color>'; inherits: true; initial-value: #B0DEF0; }
+@property --text    { syntax: '<color>'; inherits: true; initial-value: #2A1A5E; }
+@property --subtext { syntax: '<color>'; inherits: true; initial-value: #6A6394; }
+@property --bg      { syntax: '<color>'; inherits: true; initial-value: #F4FAFE; }
+:root{
+  transition: --line .9s var(--ease), --fill .9s var(--ease), --text .9s var(--ease),
+              --subtext .9s var(--ease), --bg .9s var(--ease);
+}
+:root[data-theme="work"]      { --line: #4F5FD1; --fill: #F3DFC0; --text: #1E2555; --subtext: #5C6290; --bg: #FBF8F3; }
+:root[data-theme="about"]     { --line: #8A2C9E; --fill: #F5C9D9; --text: #3B1A42; --subtext: #7A5A80; --bg: #FDF6F8; }
+:root[data-theme="experience"]{ --line: #1F7F86; --fill: #B8E6D0; --text: #173F42; --subtext: #4E7275; --bg: #F3FAF8; }
+/* hero and contact use the portrait's own palette — the :root defaults */
+
 *,*::before,*::after{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; scrollbar-gutter: stable; }
 section[id]{ scroll-margin-top: calc(var(--nav-h) - 24px); }

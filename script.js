@@ -37,8 +37,21 @@ function syncScrim(){
   const on = window.scrollY > 24;
   if (on !== scrimOn){ scrimOn = on; document.body.classList.toggle('scrolled', on); }
 }
-window.addEventListener('scroll', syncScrim, { passive: true });
-syncScrim();
+// ---------- Section themes: the palette follows whichever section holds the viewport's middle ----------
+const themedSections = [...document.querySelectorAll('section[data-theme]')];
+let currentTheme = '';
+function syncTheme(){
+  const mid = window.innerHeight * 0.5;
+  let name = themedSections.length ? themedSections[0].dataset.theme : '';
+  for (const sec of themedSections){
+    if (sec.getBoundingClientRect().top <= mid) name = sec.dataset.theme;
+  }
+  if (name !== currentTheme){ currentTheme = name; document.documentElement.dataset.theme = name; }
+}
+function onScroll(){ syncScrim(); syncTheme(); }
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', syncTheme);
+onScroll();
 
 // ---------- Scroll reveal ----------
 const io = new IntersectionObserver((entries) => {
