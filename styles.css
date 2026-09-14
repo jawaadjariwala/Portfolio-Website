@@ -444,18 +444,15 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .fact-label{ font-size: 14px; color: var(--subtext); line-height: 1.45; }
 
 /* ---------- Work ---------- */
-.project-list{ display:flex; flex-direction:column; gap: 0; position: relative; }
-/* A single line threading the drawings together, drawn as you scroll. It sits
-   behind everything, so it disappears under each opaque drawing it reaches. */
-.work-thread{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:0; }
-.work-thread path{ fill:none; stroke: var(--line); stroke-width:2; stroke-linecap:round; opacity:.45; }
+.project-list{ display:flex; flex-direction:column; gap: 0; }
 /* Open rows on the page's own surface, separated by a hairline. */
 .project{
   padding: 70px 0;
-  display:grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 72px; align-items:start;
-  position: relative; z-index: 1;
+  display:grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 72px;
+  align-items: center;                     /* the drawing sits against the middle of the row */
+  border-top: 1px solid var(--rule);
 }
-.project:first-of-type{ padding-top: 8px; }
+.project:first-of-type{ border-top: 0; padding-top: 8px; }
 /* 01 writes on the left and draws on the right; 02 swaps; and so on. */
 .project:nth-of-type(even){ grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
 .project:nth-of-type(even) .project-info{ order: 2; }
@@ -479,7 +476,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 /* The margin column: the facts a recruiter scans for, then a drawing
    floating in the whitespace — no frame, no box. */
 /* The margin column holds only the drawing, so the thread has a clear run. */
-.project-margin{ display:flex; flex-direction:column; padding-top: 10px; }
+.project-margin{ display:flex; flex-direction:column; }
 .fact-line{
   display:grid; grid-template-columns: 104px 1fr; gap: 18px; align-items: baseline;
   color: var(--subtext); font-size: 15px; line-height: 1.5;
@@ -504,31 +501,41 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 /* opaque silhouette, so the striped disc reads as behind the drawing */
 .illo-paper{ background: var(--bg); }
 /* the striped disc behind, drawn in code so all five match */
+/* The hatching is the drawing's own silhouette, offset down and right: the
+   paper layer above it knocks out the overlap, leaving a struck shadow that
+   follows whatever shape it belongs to — round under the clock, stepped along
+   the stack of documents. Offset matches the logo's misregistered fill. */
 .illo-hatch{
-  left: auto; right: -14%; top: -16%; bottom: auto; width: 62%; aspect-ratio: 1; border-radius: 50%;
-  background: repeating-linear-gradient(-45deg, var(--fill) 0 2px, transparent 2px 9px);
+  -webkit-mask-image: var(--src); mask-image: var(--src);
+  -webkit-mask-size: contain;     mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center;  mask-position: center;
+  /* the fill pulled toward the linework, so the hatch reads on any palette —
+     a pale fill on a near-white ground would otherwise vanish */
+  background: repeating-linear-gradient(-45deg,
+    color-mix(in srgb, var(--fill) 72%, var(--line)) 0 2.5px, transparent 2.5px 8px);
+  transform: translate(6%, 7.5%);
 }
-.project:nth-of-type(even) .illo-hatch{ right: auto; left: -14%; }
 .illo--blindspot{ aspect-ratio: 900 / 622; }
 .illo--blindspot .illo-line{ --src: url('assets/illo-blindspot-line.webp?v=73'); }
 .illo--blindspot .illo-fill{ --src: url('assets/illo-blindspot-fill.webp?v=73'); }
-.illo--blindspot .illo-paper{ --src: url('assets/illo-blindspot-solid.webp?v=73'); }
+.illo--blindspot .illo-paper, .illo--blindspot .illo-hatch{ --src: url('assets/illo-blindspot-solid.webp?v=73'); }
 .illo--fairly{ aspect-ratio: 652 / 777; width: min(100%, 200px); }
 .illo--fairly .illo-line{ --src: url('assets/illo-fairly-line.webp?v=73'); }
 .illo--fairly .illo-fill{ --src: url('assets/illo-fairly-fill.webp?v=73'); }
-.illo--fairly .illo-paper{ --src: url('assets/illo-fairly-solid.webp?v=73'); }
+.illo--fairly .illo-paper, .illo--fairly .illo-hatch{ --src: url('assets/illo-fairly-solid.webp?v=73'); }
 .illo--voltra{ aspect-ratio: 629 / 747; width: min(100%, 200px); }
 .illo--voltra .illo-line{ --src: url('assets/illo-voltra-line.webp?v=73'); }
 .illo--voltra .illo-fill{ --src: url('assets/illo-voltra-fill.webp?v=73'); }
-.illo--voltra .illo-paper{ --src: url('assets/illo-voltra-solid.webp?v=73'); }
+.illo--voltra .illo-paper, .illo--voltra .illo-hatch{ --src: url('assets/illo-voltra-solid.webp?v=73'); }
 .illo--aramark{ aspect-ratio: 900 / 555; }
 .illo--aramark .illo-line{ --src: url('assets/illo-aramark-line.webp?v=73'); }
 .illo--aramark .illo-fill{ --src: url('assets/illo-aramark-fill.webp?v=73'); }
-.illo--aramark .illo-paper{ --src: url('assets/illo-aramark-solid.webp?v=73'); }
+.illo--aramark .illo-paper, .illo--aramark .illo-hatch{ --src: url('assets/illo-aramark-solid.webp?v=73'); }
 .illo--ec2{ aspect-ratio: 900 / 626; }
 .illo--ec2 .illo-line{ --src: url('assets/illo-ec2-line.webp?v=73'); }
 .illo--ec2 .illo-fill{ --src: url('assets/illo-ec2-fill.webp?v=73'); }
-.illo--ec2 .illo-paper{ --src: url('assets/illo-ec2-solid.webp?v=73'); }
+.illo--ec2 .illo-paper, .illo--ec2 .illo-hatch{ --src: url('assets/illo-ec2-solid.webp?v=73'); }
 
 /* revealed as the row scrolls in: the linework wipes on, then the fill and the disc */
 .js .illo-line{ clip-path: inset(0 100% 0 0); }
