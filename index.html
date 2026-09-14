@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=44">
 <link rel="preload" as="image" href="assets/back.webp?v=44" type="image/webp">
 <link rel="preload" as="image" href="assets/head.webp?v=44" type="image/webp">
-<link rel="stylesheet" href="styles.css?v=69">
+<link rel="stylesheet" href="styles.css?v=70">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300;400;600;700&family=Inter:wght@400;500;600;700&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
@@ -163,81 +163,96 @@
 
         <article class="project reveal">
           <div class="project-info">
-            <div class="project-top"><span class="project-index">01</span><span class="project-tag">Assistive AI · Award winner</span></div>
+            <div class="project-top"><span class="project-index">01</span><span class="project-tag">Assistive AI &middot; Award winner</span></div>
             <h3>BlindSpot</h3>
             <p>Helps blind users find lost items on their own. Streams live camera frames through Gemini 2.5 Flash and speaks back clock-position directions &mdash; &ldquo;your keys are at 2 o&rsquo;clock&rdquo;.</p>
-            <p class="project-outcome"><span class="pt-label">Award</span><span><strong>Best Community Impact Award</strong> &mdash; Rutgers Raptor Rise, out of 50 projects</span></p>
-            <ul class="project-tech"><li>FastAPI</li><li>Gemini 2.5 Flash</li><li>ElevenLabs TTS</li><li>Web Speech API</li></ul>
             <div class="project-links">
-              <a href="https://github.com/jawaadjariwala/BlindSpot" target="_blank" rel="noopener">GitHub <span>→</span></a>
-              <a href="https://youtu.be/EvCNeTUADJc" target="_blank" rel="noopener">Watch demo <span>→</span></a>
+              <a href="https://github.com/jawaadjariwala/BlindSpot" target="_blank" rel="noopener">GitHub <span>&rarr;</span></a>
+              <a href="https://youtu.be/EvCNeTUADJc" target="_blank" rel="noopener">Watch demo <span>&rarr;</span></a>
             </div>
           </div>
-          <div class="project-figure plate-photo"><img src="assets/plate-blindspot.webp?v=69" alt="Jawaad holding the $1,000 Raptor Rise cheque for BlindSpot" width="984" height="738" loading="lazy" decoding="async"></div>
+          <aside class="project-margin">
+            <p class="fact-line"><span class="pt-label">Award</span><span><strong>Best Community Impact Award</strong> &mdash; Rutgers Raptor Rise, out of 50 projects</span></p>
+            <p class="fact-line"><span class="pt-label">Built with</span><span>FastAPI &middot; Gemini 2.5 Flash &middot; ElevenLabs TTS &middot; Web Speech API</span></p>
+          <svg class="illo" viewBox="0 0 240 200" aria-hidden="true">
+            <!-- fills sit offset behind the linework, as on the logo -->
+            <circle class="fl" cx="116" cy="111" r="70"/>
+            <circle class="fl" cx="205" cy="49" r="10"/>
+            <!-- the clock -->
+            <circle class="ln" style="--i:0" pathLength="1" cx="110" cy="105" r="70"/>
+            <path class="ln" style="--i:1" pathLength="1" d="M110 43v9M172 105h-9M110 167v-9M48 105h9"/>
+            <path class="ln" style="--i:2" pathLength="1" d="M110 105V58"/>
+            <path class="ln" style="--i:2" pathLength="1" d="M110 105L146 84"/>
+            <circle class="ln" style="--i:2" pathLength="1" cx="110" cy="105" r="3.5"/>
+            <!-- it speaks toward the keys -->
+            <path class="ln" style="--i:3" pathLength="1" d="M166.2 42.6A84 84 0 0 1 192.2 87.5"/>
+            <path class="ln" style="--i:4" pathLength="1" d="M179 38.3A96 96 0 0 1 202.3 78.5"/>
+            <!-- the keys, at 2 o'clock -->
+            <circle class="ln" style="--i:5" pathLength="1" cx="200" cy="44" r="9"/>
+            <path class="ln" style="--i:6" pathLength="1" d="M204 52L228 84M222 76l5-4M226 81l5-4"/>
+            <path class="ln" style="--i:6" pathLength="1" d="M198 53L190 90M191 82l-5-1M190 88l-5-1"/>
+          </svg>
+          </aside>
         </article>
 
         <article class="project reveal">
-          <div class="project-figure plate-photo"><img src="assets/plate-fairly.webp?v=69" alt="Jawaad and a teammate holding the HackRUC 2025 second-place certificate" width="1400" height="1050" loading="lazy" decoding="async"></div>
           <div class="project-info">
-            <div class="project-top"><span class="project-index">02</span><span class="project-tag">RAG · Social impact</span></div>
+            <div class="project-top"><span class="project-index">02</span><span class="project-tag">RAG &middot; Social impact</span></div>
             <h3>Fairly</h3>
             <p>Answers domestic workers&rsquo; questions about their legal rights in plain language, grounded in verified government policy documents rather than guesswork.</p>
-            <p class="project-outcome"><span class="pt-label">Award</span><span><strong>2nd place, HackRUC 2025</strong> &mdash; RAG over verified policy documents</span></p>
-            <ul class="project-tech"><li>FastAPI</li><li>Next.js</li><li>Gemini 2.0</li><li>MongoDB</li><li>Snowflake</li></ul>
             <div class="project-links">
-              <a href="https://github.com/jawaadjariwala/Fairly-AI" target="_blank" rel="noopener">GitHub <span>→</span></a>
+              <a href="https://github.com/jawaadjariwala/Fairly-AI" target="_blank" rel="noopener">GitHub <span>&rarr;</span></a>
             </div>
           </div>
+          <aside class="project-margin">
+            <p class="fact-line"><span class="pt-label">Award</span><span><strong>2nd place, HackRUC 2025</strong> &mdash; RAG over verified policy documents</span></p>
+            <p class="fact-line"><span class="pt-label">Built with</span><span>FastAPI &middot; Next.js &middot; Gemini 2.0 &middot; MongoDB &middot; Snowflake</span></p>
+          </aside>
         </article>
 
         <article class="project reveal">
           <div class="project-info">
-            <div class="project-top"><span class="project-index">03</span><span class="project-tag">Full-stack · Master's project</span></div>
+            <div class="project-top"><span class="project-index">03</span><span class="project-tag">Full-stack &middot; Master&rsquo;s project</span></div>
             <h3>Voltra Fitness</h3>
             <p>A cross-platform fitness and nutrition app, designed and built end to end. Offline-first, so it keeps working with no signal; snap a meal photo and Gemini estimates the macros.</p>
-            <p class="project-outcome"><span class="pt-label">Under the hood</span><span><strong>Offline-first sync engine</strong> &mdash; Expo SQLite as the primary store, Firestore syncing in the background</span></p>
-            <ul class="project-tech"><li>React Native</li><li>Expo</li><li>FastAPI</li><li>Firebase</li><li>Gemini Vision</li></ul>
             <div class="project-links">
-              <a href="https://github.com/jawaadjariwala/Voltra-Fitness" target="_blank" rel="noopener">GitHub <span>→</span></a>
+              <a href="https://github.com/jawaadjariwala/Voltra-Fitness" target="_blank" rel="noopener">GitHub <span>&rarr;</span></a>
             </div>
           </div>
-          <div class="project-figure plate-phone"><div class="phone"><img src="assets/plate-voltra.webp?v=69" alt="Voltra Fitness recovery tracker showing muscle readiness and the suggested next workout" width="436" height="900" loading="lazy" decoding="async"></div></div>
+          <aside class="project-margin">
+            <p class="fact-line"><span class="pt-label">Under the hood</span><span><strong>Offline-first sync engine</strong> &mdash; Expo SQLite as the primary store, Firestore syncing in the background</span></p>
+            <p class="fact-line"><span class="pt-label">Built with</span><span>React Native &middot; Expo &middot; FastAPI &middot; Firebase &middot; Gemini Vision</span></p>
+          </aside>
         </article>
 
         <article class="project reveal">
-          <div class="project-figure">
-            <svg class="plate-icon" viewBox="0 0 32 32" aria-hidden="true"><path pathLength="1" d="M5.5 26.5h21"/><path pathLength="1" d="M10 26.5V16M16 26.5V9M22 26.5V19.5"/></svg>
-            <span class="figure-kicker">BigQuery · Python</span>
-            <span class="figure-stat">43M rows</span>
-            <span class="figure-foot">HHI risk across 52 states</span>
-          </div>
           <div class="project-info">
-            <div class="project-top"><span class="project-index">04</span><span class="project-tag">Big data · Analytics</span></div>
+            <div class="project-top"><span class="project-index">04</span><span class="project-tag">Big data &middot; Analytics</span></div>
             <h3>Aramark Procurement Analytics</h3>
-            <p>43M+ rows of real procurement data on BigQuery. One distributor controls 54% of US spend &mdash; quantified with the Herfindahl-Hirschman Index, with NOAA climate data explaining the seasonal swings.</p>
-            <ul class="project-tech"><li>BigQuery</li><li>Python</li><li>scikit-learn</li><li>NOAA data</li></ul>
+            <p>43M+ rows of real procurement data on BigQuery, joined with NOAA climate data to explain the seasonal swings in demand.</p>
             <div class="project-links">
-              <a href="https://github.com/jawaadjariwala/Aramark-Procurement-Analytics" target="_blank" rel="noopener">GitHub <span>→</span></a>
+              <a href="https://github.com/jawaadjariwala/Aramark-Procurement-Analytics" target="_blank" rel="noopener">GitHub <span>&rarr;</span></a>
             </div>
           </div>
+          <aside class="project-margin">
+            <p class="fact-line"><span class="pt-label">Finding</span><span><strong>One distributor controls 54% of US spend</strong> &mdash; antitrust risk quantified with the Herfindahl-Hirschman Index</span></p>
+            <p class="fact-line"><span class="pt-label">Built with</span><span>BigQuery &middot; Python &middot; scikit-learn &middot; NOAA data</span></p>
+          </aside>
         </article>
 
         <article class="project reveal">
           <div class="project-info">
             <div class="project-top"><span class="project-index">05</span><span class="project-tag">Data visualization</span></div>
             <h3>AWS EC2 Pricing Landscape</h3>
-            <p>318,604 EC2 price points across 1,337 instance types and 104 regions. Only 6.2% are Pareto-optimal, and Graviton packs the efficiency frontier 3&times; denser than Intel.</p>
-            <ul class="project-tech"><li>Python</li><li>Pandas</li><li>Plotly</li><li>scikit-learn</li></ul>
+            <p>Mapped 318,604 EC2 price points across 1,337 instance types and 104 regions to find out how AWS actually prices compute.</p>
             <div class="project-links">
-              <a href="https://github.com/jawaadjariwala/AWS-EC2-Pricing-Landscape-Analysis" target="_blank" rel="noopener">GitHub <span>→</span></a>
+              <a href="https://github.com/jawaadjariwala/AWS-EC2-Pricing-Landscape-Analysis" target="_blank" rel="noopener">GitHub <span>&rarr;</span></a>
             </div>
           </div>
-          <div class="project-figure">
-            <svg class="plate-icon" viewBox="0 0 32 32" aria-hidden="true"><path pathLength="1" d="M10.5 24.5h12a5 5 0 0 0 .7-9.95A7.5 7.5 0 0 0 9 15.2a4.8 4.8 0 0 0 1.5 9.3Z"/></svg>
-            <span class="figure-kicker">318,604 price points</span>
-            <span class="figure-stat">6.2%</span>
-            <span class="figure-foot">Pareto-optimal instance types</span>
-          </div>
+          <aside class="project-margin">
+            <p class="fact-line"><span class="pt-label">Finding</span><span><strong>Only 6.2% of instance types are Pareto-optimal</strong> &mdash; and Graviton packs the efficiency frontier 3&times; denser than Intel</span></p>
+            <p class="fact-line"><span class="pt-label">Built with</span><span>Python &middot; Pandas &middot; Plotly &middot; scikit-learn</span></p>
+          </aside>
         </article>
 
       </div>
@@ -381,6 +396,6 @@
   <svg class="cursor-fill" viewBox="0 0 24 24"><path d="M1 1 L1 17.5 L5.4 13.6 L8.4 20.4 L11.3 19.1 L8.4 12.4 L14.2 12.4 Z"/></svg>
   <svg class="cursor-line" viewBox="0 0 24 24"><path d="M1 1 L1 17.5 L5.4 13.6 L8.4 20.4 L11.3 19.1 L8.4 12.4 L14.2 12.4 Z"/></svg>
 </div>
-<script src="script.js?v=68"></script>
+<script src="script.js?v=70"></script>
 </body>
 </html>

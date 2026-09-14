@@ -447,12 +447,14 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .project-list{ display:flex; flex-direction:column; gap: 0; }
 /* Open rows on the page's own surface, separated by a hairline. */
 .project{
-  padding: 54px 0;
-  display:grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items:center;
+  padding: 60px 0;
+  display:grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 72px; align-items:start;
   border-top: 1px solid var(--rule);
 }
 .project:first-child{ border-top: 0; padding-top: 8px; }
-.project:nth-child(even){ grid-template-columns: 1fr 1.35fr; }
+/* 01 writes on the left and draws on the right; 02 swaps; and so on. */
+.project:nth-child(even){ grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+.project:nth-child(even) .project-info{ order: 2; }
 .project-top{ display:flex; align-items:center; gap: 18px; margin-bottom: 18px; }
 .project-index{
   font-family: 'Bitter', serif; font-size: 2.5rem; font-weight: 600; line-height: 1;
@@ -460,79 +462,33 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 }
 .project-index::before{
   content:''; position:absolute; z-index:-1; border-radius: 6px; background: var(--fill);
-  left: 50%; top: 50%; width: 1em; height: 1em;
+  left: 50%; top: 50%; width: 1em; height: 1em; transform: translate(-50%, -50%);
 }
 .project-tag{ font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--line); }
 .project h3{ font-size: clamp(1.9rem, 3vw, 2.5rem); margin-bottom: 16px; letter-spacing: -0.02em; }
 .project p{ color: var(--subtext); margin-bottom: 24px; max-width: 52ch; font-size: 16.5px; line-height: 1.6; }
-.project-tech{ display:flex; flex-wrap:wrap; gap: 0 18px; margin-bottom: 24px; }
-/* Same quiet treatment as the About toolkit, with a middot lead-in. */
-.project-tech li{ font-size: 13px; color: var(--subtext); position: relative; }
-.project-tech li + li::before{ content:'·'; position:absolute; left: -11px; color: color-mix(in srgb, var(--text) 35%, transparent); }
 .project-links{ display:flex; gap: 22px; }
 .project-links a{ font-weight: 700; font-size: 14.5px; color: var(--line); }
 .project-links a span{ display:inline-block; transition: transform .25s var(--ease); }
 .project-links a:hover span{ transform: translateX(4px); }
 
-/* Illustrated plate: the logo's own device — a violet outline with the soft blue
-   fill offset behind it — so the projects sit in the portrait's two-colour world. */
-.project-figure{
-  position: relative; isolation: isolate;
-  aspect-ratio: 4/3; border-radius: 20px; padding: 30px;
-  border: 2px solid var(--line);
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  text-align:center; gap: 12px; color: var(--text);
+/* The margin column: the facts a recruiter scans for, then a drawing
+   floating in the whitespace — no frame, no box. */
+.project-margin{ display:flex; flex-direction:column; gap: 22px; padding-top: 16px; }
+.fact-line{
+  display:grid; grid-template-columns: 104px 1fr; gap: 18px; align-items: baseline;
+  color: var(--subtext); font-size: 15px; line-height: 1.5;
 }
-.project-figure::before{
-  content:''; position:absolute; inset:0; z-index:-1; border-radius: 20px;
-  background: var(--fill);
-}
-.project-figure::after{
-  content:''; position:absolute; z-index:-1; right:0; bottom:0; width: 52%; height: 52%;
-  border-radius: 0 0 18px 0; opacity: .28;
-  background: repeating-linear-gradient(-45deg, var(--line) 0 1.5px, transparent 1.5px 9px);
-  -webkit-mask-image: linear-gradient(135deg, transparent 40%, #000 100%);
-          mask-image: linear-gradient(135deg, transparent 40%, #000 100%);
-}
-/* The icon draws itself in as its row scrolls into view (pathLength="1" on
-   every primitive lets one dasharray serve all of them). */
-.js .plate-icon *{ stroke-dasharray: 1; stroke-dashoffset: 1; }
-.js .reveal.in-view .plate-icon *{ animation: drawOn 1.1s cubic-bezier(.4,0,.2,1) .25s forwards; }
-.js .reveal.in-view .plate-icon *:nth-child(2){ animation-delay: .45s; }
-.js .reveal.in-view .plate-icon *:nth-child(3){ animation-delay: .65s; }
-.js .reveal.in-view .plate-icon *:nth-child(4){ animation-delay: .85s; }
-.js .reveal.in-view .plate-icon *:nth-child(5){ animation-delay: 1.05s; }
+.fact-line strong{ color: var(--text); font-weight: 600; }
+.illo{ width: min(100%, 290px); height: auto; margin-top: 18px; overflow: visible; }
+.project:nth-child(odd) .illo{ align-self: flex-end; }
+.illo .ln{ fill: none; stroke: var(--line); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.illo .fl{ fill: var(--fill); opacity: 0; transition: opacity .7s ease .9s; }
+.reveal.in-view .illo .fl{ opacity: 1; }
+/* drawn on as the row scrolls in; each stroke carries --i for its turn */
+.js .illo .ln{ stroke-dasharray: 1; stroke-dashoffset: 1; }
+.js .reveal.in-view .illo .ln{ animation: drawOn 1.1s cubic-bezier(.4,0,.2,1) forwards; animation-delay: calc(.2s + var(--i, 0) * .16s); }
 @keyframes drawOn{ to{ stroke-dashoffset: 0; } }
-/* The offset fills drift a few pixels toward the cursor (script.js sets --mx/--my). */
-.project-figure::before{ transform: translate(calc(9px + var(--mx, 0) * 4px), calc(9px + var(--my, 0) * 4px)); }
-.project-index::before{ transform: translate(calc(-50% + var(--mx, 0) * 3px), calc(-50% + var(--my, 0) * 3px)); }
-/* Photo plates: the image is the fill, clipped to the frame, with the offset
-   fill still peeking out behind. Hovering the row brings it into register. */
-.plate-photo{ padding: 0; overflow: hidden; }
-.plate-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit: cover; display:block; border-radius: 18px; }
-.project-figure::before{ transition: transform .45s var(--ease); }
-.project:hover .project-figure::before{ transform: translate(calc(var(--mx, 0) * 4px), calc(var(--my, 0) * 4px)); }
-/* Phone plate: a tall screen drawn as a slim device on the fill. */
-.plate-phone{ padding: 18px; }
-.plate-phone .phone{
-  height: 92%; aspect-ratio: 436 / 900; border: 2px solid var(--line); border-radius: 22px;
-  overflow: hidden; background: var(--text); box-shadow: 6px 6px 0 var(--bg);
-}
-.plate-phone .phone img{ width:100%; height:100%; object-fit: cover; display:block; }
-/* What the plate used to say now sits in the column built for reading. */
-.project-outcome{
-  display:grid; grid-template-columns: 122px 1fr; gap: 20px; align-items: baseline;
-  margin: -6px 0 22px; color: var(--subtext); font-size: 15px; line-height: 1.5; max-width: 52ch;
-}
-.project-outcome strong{ color: var(--text); font-weight: 600; }
-.plate-icon{
-  width: 42px; height: 42px; fill: none; stroke: var(--line);
-  stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
-  margin-bottom: 2px;
-}
-.figure-kicker{ font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--line); }
-.figure-stat{ font-family:'Bitter', serif; font-size: clamp(1.4rem, 2.1vw, 1.9rem); line-height: 1.15; font-weight: 600; color: var(--text); }
-.figure-foot{ font-size: 13px; color: var(--subtext); }
 
 /* ---------- Experience ---------- */
 .experience .section-title{ margin-bottom: 56px; }
@@ -605,10 +561,10 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
   .facts-row{ grid-template-columns: repeat(2, 1fr); }
   .project, .project:nth-child(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
-  .project:nth-child(even) .project-figure{ order: -1; }
-  .project-figure{ aspect-ratio: 16/9; }
-  .plate-phone{ aspect-ratio: 1 / 1; }
-  .project-outcome{ grid-template-columns: 1fr; gap: 4px; }
+  .project:nth-child(even) .project-info{ order: 0; }
+  .project-margin{ padding-top: 0; }
+  .fact-line{ grid-template-columns: 1fr; gap: 4px; }
+  .illo{ align-self: flex-start !important; }
   .tl-item{ grid-template-columns: 1fr; gap: 8px; }
   .section{ padding: 90px 0; }
   .section-head{ flex-direction: column; align-items:flex-start; margin-bottom: 40px; }

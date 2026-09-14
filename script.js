@@ -95,7 +95,6 @@ const BROW_H = 67, MOUTH_H = 49;
 const HEAD_GAIN = window.matchMedia('(hover: none), (pointer: coarse)').matches ? 1.35 : 1;
 
 let tx = 0, ty = 0;        // target pointer position, -1..1
-let mxT = 0, myT = 0, mx = 0, my = 0;   // pointer across the whole viewport, for the drifting fills
 let cx = 0, cy = 0;        // current (lerped)
 let lastPointerAt = 0;
 let hasPointer = false;
@@ -111,8 +110,6 @@ function onPointer(clientX, clientY){
   ty = clamp((clientY - py) / (window.innerHeight * 0.35), -1, 1);
   lastPointerAt = performance.now();
   hasPointer = true;
-  mxT = clamp(clientX / window.innerWidth * 2 - 1, -1, 1);
-  myT = clamp(clientY / window.innerHeight * 2 - 1, -1, 1);
   noteQuadrant(clientX - px, clientY - py);
 }
 
@@ -357,12 +354,6 @@ function frame(t){
   cx += (gx - cx) * ease;
   cy += (gy - cy) * ease;
   if (window.__cursorTick) window.__cursorTick();
-  // offset fills across the page lean toward the cursor
-  mx += (mxT - mx) * 0.06; my += (myT - my) * 0.06;
-  if (!reduceMotion){
-    document.documentElement.style.setProperty('--mx', mx.toFixed(3));
-    document.documentElement.style.setProperty('--my', my.toFixed(3));
-  }
 
   if (t < dizzyUntil && !reduceMotion){
     renderDizzy(t);
