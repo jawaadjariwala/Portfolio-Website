@@ -488,7 +488,11 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    two alpha masks (source/build-illos.py) so the page paints them live from
    the section palette. A lighter second grey lands as a tint of the fill. */
 .illo{ position: relative; width: min(100%, 300px); }
-.project:nth-of-type(odd) .illo{ align-self: flex-end; }
+/* Pulled toward the writing rather than out to the page edge: on odd rows the
+   margin column sits on the right, so inward is flex-start, and the reverse
+   on even rows. */
+.project:nth-of-type(odd) .illo{ align-self: flex-start; }
+.project:nth-of-type(even) .illo{ align-self: flex-end; }
 .illo i{ position: absolute; inset: 0; display: block; }
 .illo-line, .illo-fill, .illo-paper{
   -webkit-mask-image: var(--src); mask-image: var(--src);
