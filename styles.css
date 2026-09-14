@@ -399,35 +399,36 @@ img{ max-width:100%; }
 .tk-group ul{ display:flex; flex-direction:column; gap: 8px; }
 .tk-group li{ font-size: 15px; color: var(--ink-soft); }
 
-.facts-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.facts-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+/* Figures, not cards: a hairline between them is all the structure needed. */
 .fact{
-  display:flex; flex-direction:column; gap: 10px; padding: 26px 24px;
-  background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm); transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+  display:flex; flex-direction:column; gap: 10px;
+  padding: 4px 28px; border-left: 1px solid rgba(42,26,94,0.10);
 }
-.fact:hover{ transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.fact:first-child{ padding-left: 0; border-left: 0; }
 .fact-num{ font-family:'Bitter', serif; font-size: 2.8rem; line-height: 1; color: var(--accent); font-weight: 600; }
 .fact-num sup{ font-size: .5em; vertical-align: super; }
 .fact-label{ font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
 
 /* ---------- Work ---------- */
-.work{ background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 12%, var(--bg-soft) 88%, var(--bg) 100%); }
-.project-list{ display:flex; flex-direction:column; gap: 22px; }
+.project-list{ display:flex; flex-direction:column; gap: 0; }
+/* Open rows on the page's own surface, separated by a hairline. */
 .project{
-  background: var(--bg-card); border-radius: var(--radius); padding: 44px;
-  display:grid; grid-template-columns: 1.35fr 1fr; gap: 44px; align-items:center;
-  border: 1px solid var(--line); box-shadow: var(--shadow-sm);
-  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+  padding: 54px 0;
+  display:grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items:center;
+  border-top: 1px solid rgba(42,26,94,0.10);
 }
-.project:hover{ transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+.project:first-child{ border-top: 0; padding-top: 8px; }
 .project:nth-child(even){ grid-template-columns: 1fr 1.35fr; }
 .project-top{ display:flex; align-items:center; gap: 14px; margin-bottom: 14px; }
 .project-index{ font-family: 'Bitter', serif; font-size: 13px; color: var(--ink-soft); letter-spacing: .04em; }
 .project-tag{ font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
 .project h3{ font-size: 1.75rem; margin-bottom: 14px; }
 .project p{ color: var(--ink-soft); margin-bottom: 20px; max-width: 56ch; }
-.project-tech{ display:flex; flex-wrap:wrap; gap: 8px; margin-bottom: 22px; }
-.project-tech li{ font-size: 12.5px; font-weight: 600; padding: 6px 12px; background: var(--bg-soft); border-radius: 100px; color: var(--ink); }
+.project-tech{ display:flex; flex-wrap:wrap; gap: 0 18px; margin-bottom: 24px; }
+/* Same quiet treatment as the About toolkit, with a middot lead-in. */
+.project-tech li{ font-size: 13px; color: var(--ink-soft); position: relative; }
+.project-tech li + li::before{ content:'·'; position:absolute; left: -11px; color: rgba(42,26,94,0.35); }
 .project-links{ display:flex; gap: 22px; }
 .project-links a{ font-weight: 700; font-size: 14.5px; color: var(--accent); }
 .project-links a span{ display:inline-block; transition: transform .25s var(--ease); }
@@ -477,11 +478,12 @@ img{ max-width:100%; }
 .contact .btn-lg{ margin-bottom: 44px; }
 .contact-links{ display:flex; flex-wrap:wrap; justify-content:center; gap: 14px; }
 .contact-link{
-  display:flex; flex-direction:column; gap: 4px; padding: 18px 26px; min-width: 220px; text-align:left;
-  border: 1px solid var(--line); border-radius: var(--radius-sm); background: rgba(255,255,255,0.6);
-  transition: border-color .25s, transform .25s var(--ease), background .25s, box-shadow .25s;
+  display:flex; flex-direction:column; gap: 5px; padding: 0 30px; min-width: 200px; text-align:left;
+  border-left: 1px solid rgba(42,26,94,0.10);
+  transition: color .25s ease;
 }
-.contact-link:hover{ border-color: rgba(109,44,242,0.5); transform: translateY(-4px); background: #fff; box-shadow: var(--shadow-md); }
+.contact-link:first-child{ padding-left: 0; border-left: 0; }
+.contact-link:hover .contact-link-value{ color: var(--accent); }
 .contact-link-label{ font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
 .contact-link-value{ font-weight: 600; font-size: 15px; }
 
