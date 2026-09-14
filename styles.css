@@ -1,22 +1,32 @@
-/* ---------- Tokens (sampled from the portrait artwork) ---------- */
+/* ---------- Tokens ----------
+   Duotone system (after robbowen.digital): a line colour, a flat fill that sits
+   offset behind it, a text colour, and a near-white ground. Every drawn element
+   reads from these, so a section can be re-themed by changing them alone.
+   The hero palette is sampled from the portrait artwork and is fixed — the
+   portrait is a raster in exactly these colours. */
 :root{
+  --line: #6D2CF2;      /* linework */
+  --fill: #B0DEF0;      /* flat fill, offset behind the line */
+  --text: #2A1A5E;
+  --subtext: #6A6394;
   --bg: #F4FAFE;
-  --bg-rgb: 244, 250, 254;
-  --bg-soft: #EAF3FB;
-  --bg-card: #FFFFFF;
-  --ink: #2A1A5E;
-  --ink-2: #391D7A;
-  --ink-soft: #6A6394;
-  --accent: #6D2CF2;
+  --rule: color-mix(in srgb, var(--text) 10%, transparent);   /* hairlines */
+
+  /* legacy names, aliased to the tokens above */
+  --accent: var(--line);
   --accent-deep: #5514E0;
   --accent-ink: #FFFFFF;
-  --blue: #B0DEF0;
+  --blue: var(--fill);
   --blue-2: #D3EBF8;
   --blue-3: #E1F2FB;
-  --line: rgba(42,26,94,0.10);
-  --shadow-sm: 0 1px 2px rgba(42,26,94,0.06), 0 4px 12px rgba(42,26,94,0.05);
-  --shadow-md: 0 8px 24px rgba(42,26,94,0.08), 0 2px 6px rgba(42,26,94,0.05);
-  --shadow-lg: 0 24px 56px rgba(42,26,94,0.12), 0 6px 16px rgba(42,26,94,0.06);
+  --ink: var(--text);
+  --ink-2: #391D7A;
+  --ink-soft: var(--subtext);
+  --bg-soft: #EAF3FB;
+  --bg-card: #FFFFFF;
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--text) 6%, transparent), 0 4px 12px color-mix(in srgb, var(--text) 5%, transparent);
+  --shadow-md: 0 8px 24px color-mix(in srgb, var(--text) 8%, transparent), 0 2px 6px color-mix(in srgb, var(--text) 5%, transparent);
+  --shadow-lg: 0 24px 56px color-mix(in srgb, var(--text) 12%, transparent), 0 6px 16px color-mix(in srgb, var(--text) 6%, transparent);
   --radius: 22px;
   --radius-sm: 14px;
   --maxw: 1140px;
@@ -72,7 +82,7 @@ img{ max-width:100%; }
 
 .bg-dots{
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background-image: radial-gradient(rgba(42,26,94,0.10) 1px, transparent 1.2px);
+  background-image: radial-gradient(var(--rule) 1px, transparent 1.2px);
   background-size: 26px 26px;
   -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 0%, transparent 100%);
           mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 0%, transparent 100%);
@@ -110,7 +120,7 @@ img{ max-width:100%; }
 .btn:hover .btn-arrow{ transform: translateX(4px); }
 .btn-primary{ background: var(--ink); color: var(--bg); box-shadow: var(--shadow-sm); }
 .btn-primary:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); background: var(--ink-2); }
-.btn-ghost{ border-color: rgba(42,26,94,0.25); color: var(--ink); background: rgba(255,255,255,0.5); }
+.btn-ghost{ border-color: color-mix(in srgb, var(--text) 25%, transparent); color: var(--ink); background: rgba(255,255,255,0.5); }
 .btn-ghost:hover{ border-color: var(--ink); transform: translateY(-2px); background: #fff; }
 .btn-nav{ padding: 10px 18px; font-size: 14px; background: var(--accent); color: var(--accent-ink); }
 .btn-nav:hover{ background: var(--accent-deep); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(109,44,242,0.3); }
@@ -150,7 +160,7 @@ img{ max-width:100%; }
   border-radius: 18px 18px 0 0;
   transition: opacity .4s var(--ease);
   background: linear-gradient(to bottom,
-    rgba(var(--bg-rgb), .92) 0%, rgba(var(--bg-rgb), .78) 55%, rgba(var(--bg-rgb), 0) 100%);
+    color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 78%, transparent) 55%, color-mix(in srgb, var(--bg) 0%, transparent) 100%);
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
@@ -179,7 +189,7 @@ img{ max-width:100%; }
   font-size: 16.5px; letter-spacing: -0.5px;
 }
 .nav-logo:hover{ transform: rotate(-6deg) scale(1.05); }
-.nav-divider{ width: 1px; height: 30px; background: rgba(42,26,94,0.28); }
+.nav-divider{ width: 1px; height: 30px; background: color-mix(in srgb, var(--text) 28%, transparent); }
 .menu-btn{
   appearance:none; background:none; border:0; cursor:pointer; padding: 6px 2px;
   font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
@@ -246,7 +256,7 @@ img{ max-width:100%; }
   font-size: clamp(2.6rem, min(6.4vw, 8.2vh), 4.8rem); line-height: 1; letter-spacing: -0.025em;
   transition: transform .3s var(--ease), color .3s ease;
 }
-.menu-item-desc{ font-size: 16px; line-height: 1.5; color: rgba(42,26,94,.6); max-width: 30ch; }
+.menu-item-desc{ font-size: 16px; line-height: 1.5; color: color-mix(in srgb, var(--text) 60%, transparent); max-width: 30ch; }
 .menu-item:hover .menu-item-title{ color: var(--accent); transform: translateX(14px); }
 .menu-rule{ transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
 .menu-overlay.open .menu-rule{ transform: none; transition: transform .55s cubic-bezier(.34,1.4,.64,1) .5s; }
@@ -273,7 +283,7 @@ img{ max-width:100%; }
   display:inline-flex; align-items:center; gap: 10px; max-width: 100%;
   font-size: 13px; font-weight: 600; color: var(--ink-soft); line-height: 1.3;
   padding: 8px 14px 8px 10px; border-radius: 100px;
-  background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+  background: rgba(255,255,255,0.7); border: 1px solid var(--rule);
   margin-bottom: 26px; box-shadow: var(--shadow-sm);
 }
 .status-dot{ flex: none; }
@@ -313,7 +323,7 @@ img{ max-width:100%; }
 }
 .portrait{ position: relative; z-index: 1; }
 .layer{ display:block; width:100%; height:auto; user-select:none; -webkit-user-drag:none; }
-.layer-back{ filter: drop-shadow(0 30px 40px rgba(42,26,94,0.10)); }
+.layer-back{ filter: drop-shadow(0 30px 40px var(--rule)); }
 .head{ position:absolute; inset:0; transform-origin: 49.28% 66.91%; will-change: transform; }
 .layer-head{ position:absolute; inset:0; height:100%; pointer-events:none; }
 .feat{ position:absolute; pointer-events:none; }
@@ -343,7 +353,7 @@ img{ max-width:100%; }
 /* dizzy easter egg */
 .stars{ position:absolute; inset:0; pointer-events:none; }
 .star{ position:absolute; width: 6.5%; aspect-ratio: 1; opacity: 0; will-change: transform, opacity; }
-.star svg{ display:block; width:100%; height:100%; fill: var(--accent); stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 3px rgba(42,26,94,0.18)); }
+.star svg{ display:block; width:100%; height:100%; fill: var(--accent); stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 3px color-mix(in srgb, var(--text) 18%, transparent)); }
 .star:nth-child(2) svg{ fill: #8FB4F2; }
 .star:nth-child(3) svg{ fill: #C3DFF5; }
 .brow-left{ left:32.194%; top:26.311%; width:14.838%; height:6.058%; }
@@ -388,7 +398,7 @@ img{ max-width:100%; }
 }
 /* Toolkit: four quiet columns, no pills or logos. */
 .toolkit{
-  margin-top: 84px; padding-top: 44px; border-top: 1px solid rgba(42,26,94,0.10);
+  margin-top: 84px; padding-top: 44px; border-top: 1px solid var(--rule);
   display:grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
 }
 .tk-group h3{
@@ -403,7 +413,7 @@ img{ max-width:100%; }
 /* Figures, not cards: a hairline between them is all the structure needed. */
 .fact{
   display:flex; flex-direction:column; gap: 10px;
-  padding: 4px 28px; border-left: 1px solid rgba(42,26,94,0.10);
+  padding: 4px 28px; border-left: 1px solid var(--rule);
 }
 .fact:first-child{ padding-left: 0; border-left: 0; }
 .fact-num{ font-family:'Bitter', serif; font-size: 2.8rem; line-height: 1; color: var(--accent); font-weight: 600; }
@@ -416,7 +426,7 @@ img{ max-width:100%; }
 .project{
   padding: 54px 0;
   display:grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items:center;
-  border-top: 1px solid rgba(42,26,94,0.10);
+  border-top: 1px solid var(--rule);
 }
 .project:first-child{ border-top: 0; padding-top: 8px; }
 .project:nth-child(even){ grid-template-columns: 1fr 1.35fr; }
@@ -428,7 +438,7 @@ img{ max-width:100%; }
 .project-tech{ display:flex; flex-wrap:wrap; gap: 0 18px; margin-bottom: 24px; }
 /* Same quiet treatment as the About toolkit, with a middot lead-in. */
 .project-tech li{ font-size: 13px; color: var(--ink-soft); position: relative; }
-.project-tech li + li::before{ content:'·'; position:absolute; left: -11px; color: rgba(42,26,94,0.35); }
+.project-tech li + li::before{ content:'·'; position:absolute; left: -11px; color: color-mix(in srgb, var(--text) 35%, transparent); }
 .project-links{ display:flex; gap: 22px; }
 .project-links a{ font-weight: 700; font-size: 14.5px; color: var(--accent); }
 .project-links a span{ display:inline-block; transition: transform .25s var(--ease); }
@@ -461,9 +471,9 @@ img{ max-width:100%; }
 .timeline{ position: relative; display:flex; flex-direction:column; gap: 8px; }
 .tl-item{
   display:grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 26px 0;
-  border-top: 1px solid var(--line); position: relative;
+  border-top: 1px solid var(--rule); position: relative;
 }
-.tl-item:last-child{ border-bottom: 1px solid var(--line); }
+.tl-item:last-child{ border-bottom: 1px solid var(--rule); }
 .tl-date{ font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); padding-top: 4px; }
 .tl-body h3{ font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0; margin-bottom: 8px; }
 .tl-body h3 span{ color: var(--ink-soft); font-weight: 500; }
@@ -476,8 +486,8 @@ img{ max-width:100%; }
 .contact-title{ font-size: clamp(2.2rem, 4.2vw, 3.5rem); margin-bottom: 18px; }
 .contact-sub{ color: var(--ink-soft); max-width: 46ch; font-size: 17px; margin-bottom: 56px; }
 .contact-list{ display:flex; flex-direction:column; }
-.contact-list li{ border-top: 1px solid rgba(42,26,94,0.10); }
-.contact-list li:last-child{ border-bottom: 1px solid rgba(42,26,94,0.10); }
+.contact-list li{ border-top: 1px solid var(--rule); }
+.contact-list li:last-child{ border-bottom: 1px solid var(--rule); }
 .contact-list a{
   display:grid; grid-template-columns: clamp(150px, 18vw, 230px) 1fr auto;
   align-items: baseline; gap: 10px 32px; padding: 26px 0;
@@ -502,7 +512,7 @@ img{ max-width:100%; }
 .site-footer{
   display:flex; justify-content:space-between; gap: 12px; flex-wrap: wrap;
   max-width: var(--maxw); margin: 0 auto; padding: 28px 32px;
-  font-size: 13.5px; color: var(--ink-soft); border-top: 1px solid var(--line);
+  font-size: 13.5px; color: var(--ink-soft); border-top: 1px solid var(--rule);
 }
 
 /* ---------- Responsive ---------- */
