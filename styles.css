@@ -449,7 +449,7 @@ img{ max-width:100%; }
 }
 .project-index::before{
   content:''; position:absolute; z-index:-1; border-radius: 6px; background: var(--fill);
-  left: 50%; top: 50%; width: 1em; height: 1em; transform: translate(-50%, -50%);
+  left: 50%; top: 50%; width: 1em; height: 1em;
 }
 .project-tag{ font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--line); }
 .project h3{ font-size: clamp(1.9rem, 3vw, 2.5rem); margin-bottom: 16px; letter-spacing: -0.02em; }
@@ -474,7 +474,7 @@ img{ max-width:100%; }
 }
 .project-figure::before{
   content:''; position:absolute; inset:0; z-index:-1; border-radius: 20px;
-  background: var(--fill); transform: translate(9px, 9px);
+  background: var(--fill);
 }
 .project-figure::after{
   content:''; position:absolute; z-index:-1; right:0; bottom:0; width: 52%; height: 52%;
@@ -483,6 +483,18 @@ img{ max-width:100%; }
   -webkit-mask-image: linear-gradient(135deg, transparent 40%, #000 100%);
           mask-image: linear-gradient(135deg, transparent 40%, #000 100%);
 }
+/* The icon draws itself in as its row scrolls into view (pathLength="1" on
+   every primitive lets one dasharray serve all of them). */
+.js .plate-icon *{ stroke-dasharray: 1; stroke-dashoffset: 1; }
+.js .reveal.in-view .plate-icon *{ animation: drawOn 1.1s cubic-bezier(.4,0,.2,1) .25s forwards; }
+.js .reveal.in-view .plate-icon *:nth-child(2){ animation-delay: .45s; }
+.js .reveal.in-view .plate-icon *:nth-child(3){ animation-delay: .65s; }
+.js .reveal.in-view .plate-icon *:nth-child(4){ animation-delay: .85s; }
+.js .reveal.in-view .plate-icon *:nth-child(5){ animation-delay: 1.05s; }
+@keyframes drawOn{ to{ stroke-dashoffset: 0; } }
+/* The offset fills drift a few pixels toward the cursor (script.js sets --mx/--my). */
+.project-figure::before{ transform: translate(calc(9px + var(--mx, 0) * 4px), calc(9px + var(--my, 0) * 4px)); }
+.project-index::before{ transform: translate(calc(-50% + var(--mx, 0) * 3px), calc(-50% + var(--my, 0) * 3px)); }
 .plate-icon{
   width: 42px; height: 42px; fill: none; stroke: var(--line);
   stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
@@ -495,7 +507,11 @@ img{ max-width:100%; }
 /* ---------- Experience ---------- */
 .experience .section-title{ margin-bottom: 56px; }
 .timeline{ position: relative; display:flex; flex-direction:column; gap: 8px; padding-left: 38px; }
-.timeline::before{ content:''; position:absolute; left: 8px; top: 30px; bottom: 30px; width: 2px; border-radius: 2px; background: var(--line); }
+.timeline::before{
+  content:''; position:absolute; left: 8px; top: 30px; bottom: 30px; width: 2px; border-radius: 2px; background: var(--line);
+  /* drawn down the page as you scroll past (script.js sets --tl-progress) */
+  transform-origin: top; transform: scaleY(var(--tl-progress, 1));
+}
 .tl-item{
   display:grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 22px 0; position: relative;
 }

@@ -48,7 +48,19 @@ function syncTheme(){
   }
   if (name !== currentTheme){ currentTheme = name; document.documentElement.dataset.theme = name; }
 }
-function onScroll(){ syncScrim(); syncTheme(); }
+// ---------- Timeline rail: drawn from 0 to 1 as the timeline crosses the viewport ----------
+const timeline = document.querySelector('.timeline');
+// (reduceMotion is declared further down, after this block has already run once)
+const railReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function syncTimeline(){
+  if (!timeline) return;
+  if (railReduced){ timeline.style.setProperty('--tl-progress', '1'); return; }
+  const r = timeline.getBoundingClientRect(), vh = window.innerHeight;
+  // starts when the rail's top reaches 80% down the screen, done when its bottom reaches 55%
+  const p = (vh * 0.8 - r.top) / (r.height + vh * 0.25);
+  timeline.style.setProperty('--tl-progress', clamp(p, 0, 1).toFixed(3));
+}
+function onScroll(){ syncScrim(); syncTheme(); syncTimeline(); }
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', syncTheme);
 onScroll();
@@ -83,6 +95,7 @@ const BROW_H = 67, MOUTH_H = 49;
 const HEAD_GAIN = window.matchMedia('(hover: none), (pointer: coarse)').matches ? 1.35 : 1;
 
 let tx = 0, ty = 0;        // target pointer position, -1..1
+let mxT = 0, myT = 0, mx = 0, my = 0;   // pointer across the whole viewport, for the drifting fills
 let cx = 0, cy = 0;        // current (lerped)
 let lastPointerAt = 0;
 let hasPointer = false;
@@ -98,6 +111,8 @@ function onPointer(clientX, clientY){
   ty = clamp((clientY - py) / (window.innerHeight * 0.35), -1, 1);
   lastPointerAt = performance.now();
   hasPointer = true;
+  mxT = clamp(clientX / window.innerWidth * 2 - 1, -1, 1);
+  myT = clamp(clientY / window.innerHeight * 2 - 1, -1, 1);
   noteQuadrant(clientX - px, clientY - py);
 }
 
@@ -311,6 +326,12 @@ function frame(t){
   const ease = idle ? 0.03 : 0.09;
   cx += (gx - cx) * ease;
   cy += (gy - cy) * ease;
+  // offset fills across the page lean toward the cursor
+  mx += (mxT - mx) * 0.06; my += (myT - my) * 0.06;
+  if (!reduceMotion){
+    document.documentElement.style.setProperty('--mx', mx.toFixed(3));
+    document.documentElement.style.setProperty('--my', my.toFixed(3));
+  }
 
   if (t < dizzyUntil && !reduceMotion){
     renderDizzy(t);
