@@ -220,8 +220,8 @@ img{ max-width:100%; }
 .menu-head{ display:flex; align-items:center; gap: 22px; padding: var(--inset) var(--inset) 16px; }
 /* Vertical metrics below the head scale with viewport height so the last item
    never falls past the fold on a laptop. */
-.menu-inner{ margin: 0; padding: clamp(18px, 4vh, 46px) var(--inset) clamp(28px, 7vh, 80px); width: 100%;
-}
+/* Sits close under the head — a large gap here read as the icons floating. */
+.menu-inner{ margin: 0; padding: clamp(4px, 1.2vh, 14px) var(--inset) clamp(28px, 7vh, 80px); width: 100%; }
 
 .menu-socials{ display:flex; align-items:center; gap: 24px; margin-bottom: clamp(24px, 7vh, 84px); }
 .menu-rule{ width: 74px; height: 2px; background: var(--accent); border-radius: 2px; margin-right: 8px; }
