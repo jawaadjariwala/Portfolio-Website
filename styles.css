@@ -470,21 +470,33 @@ img{ max-width:100%; }
 .tl-body p{ color: var(--ink-soft); font-size: 15.5px; max-width: 68ch; }
 
 /* ---------- Contact ---------- */
-.contact{ text-align:center; padding-bottom: 110px; }
-.contact-inner{ display:flex; flex-direction:column; align-items:center; }
-.contact-title{ font-size: clamp(2.4rem, 5.4vw, 4rem); margin-bottom: 18px; }
-.contact-sub{ color: var(--ink-soft); max-width: 500px; font-size: 17px; margin-bottom: 36px; }
-.contact .btn-lg{ margin-bottom: 44px; }
-.contact-links{ display:flex; flex-wrap:wrap; justify-content:center; gap: 14px; }
-.contact-link{
-  display:flex; flex-direction:column; gap: 5px; padding: 0 30px; min-width: 200px; text-align:left;
-  border-left: 1px solid rgba(42,26,94,0.10);
-  transition: color .25s ease;
+/* Left-aligned like every other section, with the three routes set as large
+   rows in the menu's language rather than boxes. */
+.contact{ padding-bottom: 120px; }
+.contact-title{ font-size: clamp(2.2rem, 4.2vw, 3.5rem); margin-bottom: 18px; }
+.contact-sub{ color: var(--ink-soft); max-width: 46ch; font-size: 17px; margin-bottom: 56px; }
+.contact-list{ display:flex; flex-direction:column; }
+.contact-list li{ border-top: 1px solid rgba(42,26,94,0.10); }
+.contact-list li:last-child{ border-bottom: 1px solid rgba(42,26,94,0.10); }
+.contact-list a{
+  display:grid; grid-template-columns: clamp(150px, 18vw, 230px) 1fr auto;
+  align-items: baseline; gap: 10px 32px; padding: 26px 0;
+  transition: color .3s ease;
 }
-.contact-link:first-child{ padding-left: 0; border-left: 0; }
-.contact-link:hover .contact-link-value{ color: var(--accent); }
-.contact-link-label{ font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
-.contact-link-value{ font-weight: 600; font-size: 15px; }
+.c-label{
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+}
+.c-value{
+  font-family: 'Bitter', Georgia, serif; font-weight: 600; color: var(--ink);
+  font-size: clamp(1.25rem, 2.2vw, 1.9rem); line-height: 1.1; letter-spacing: -0.02em;
+  word-break: break-word;
+  transition: transform .3s var(--ease), color .3s ease;
+}
+.c-arrow{ color: var(--accent); font-size: 20px; opacity: 0; transform: translateX(-8px);
+  transition: opacity .3s ease, transform .3s var(--ease); align-self: center; }
+.contact-list a:hover .c-value{ color: var(--accent); transform: translateX(10px); }
+.contact-list a:hover .c-arrow{ opacity: 1; transform: none; }
 
 /* ---------- Footer ---------- */
 .site-footer{
@@ -544,7 +556,8 @@ img{ max-width:100%; }
   .section-inner{ padding: 0 20px; }
   .facts-row{ grid-template-columns: 1fr 1fr; gap: 10px; }
   .fact{ padding: 18px 16px; }
-  .contact-link{ min-width: 100%; }
+  .contact-list a{ grid-template-columns: 1fr auto; gap: 6px 16px; padding: 20px 0; }
+  .c-label{ grid-column: 1 / -1; }
   .site-footer{ justify-content:center; text-align:center; }
 }
 
