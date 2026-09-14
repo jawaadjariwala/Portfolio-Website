@@ -114,7 +114,7 @@ img{ max-width:100%; }
 .section-title{ font-size: clamp(2.1rem, 3.8vw, 3rem); }
 .section-head{
   display:flex; align-items:flex-end; justify-content:space-between; gap: 24px;
-  margin-bottom: 56px;
+  margin-bottom: 0;
 }
 .link-arrow{ font-weight: 600; color: var(--line); white-space: nowrap; padding-bottom: 6px; }
 .link-arrow span{ display:inline-block; transition: transform .25s var(--ease); }
@@ -452,7 +452,9 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   align-items: center;                     /* the drawing sits against the middle of the row */
   border-top: 1px solid var(--rule);
 }
-.project:first-of-type{ border-top: 0; padding-top: 8px; }
+/* Symmetric padding like every other row, so the drawing centres against the
+   full height; the section head gives up its bottom margin to compensate. */
+.project:first-of-type{ border-top: 0; }
 /* 01 writes on the left and draws on the right; 02 swaps; and so on. */
 .project:nth-of-type(even){ grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
 .project:nth-of-type(even) .project-info{ order: 2; }
@@ -488,11 +490,9 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    two alpha masks (source/build-illos.py) so the page paints them live from
    the section palette. A lighter second grey lands as a tint of the fill. */
 .illo{ position: relative; width: min(100%, 300px); }
-/* Pulled toward the writing rather than out to the page edge: on odd rows the
-   margin column sits on the right, so inward is flex-start, and the reverse
-   on even rows. */
-.project:nth-of-type(odd) .illo{ align-self: flex-start; }
-.project:nth-of-type(even) .illo{ align-self: flex-end; }
+/* Centred in the empty rectangle beside the writing: the column gutter and
+   the content edge to either side, the dividers above and below. */
+.illo{ align-self: center; }
 .illo i{ position: absolute; inset: 0; display: block; }
 .illo-line, .illo-fill, .illo-paper{
   -webkit-mask-image: var(--src); mask-image: var(--src);
