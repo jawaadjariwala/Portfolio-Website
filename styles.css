@@ -480,15 +480,58 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   color: var(--subtext); font-size: 15px; line-height: 1.5;
 }
 .fact-line strong{ color: var(--text); font-weight: 600; }
-.illo{ width: min(100%, 290px); height: auto; margin-top: 18px; overflow: visible; }
+/* The drawings: generated as black line + flat grey on white, then split into
+   two alpha masks (source/build-illos.py) so the page paints them live from
+   the section palette. A lighter second grey lands as a tint of the fill. */
+.illo{ position: relative; width: min(100%, 300px); margin-top: 22px; }
 .project:nth-child(odd) .illo{ align-self: flex-end; }
-.illo .ln{ fill: none; stroke: var(--line); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.illo .fl{ fill: var(--fill); opacity: 0; transition: opacity .7s ease .9s; }
-.reveal.in-view .illo .fl{ opacity: 1; }
-/* drawn on as the row scrolls in; each stroke carries --i for its turn */
-.js .illo .ln{ stroke-dasharray: 1; stroke-dashoffset: 1; }
-.js .reveal.in-view .illo .ln{ animation: drawOn 1.1s cubic-bezier(.4,0,.2,1) forwards; animation-delay: calc(.2s + var(--i, 0) * .16s); }
-@keyframes drawOn{ to{ stroke-dashoffset: 0; } }
+.illo i{ position: absolute; inset: 0; display: block; }
+.illo-line, .illo-fill, .illo-paper{
+  -webkit-mask-image: var(--src); mask-image: var(--src);
+  -webkit-mask-size: contain;     mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center;  mask-position: center;
+}
+.illo-line{ background: var(--line); }
+.illo-fill{ background: var(--fill); }
+/* opaque silhouette, so the striped disc reads as behind the drawing */
+.illo-paper{ background: var(--bg); }
+/* the striped disc behind, drawn in code so all five match */
+.illo-hatch{
+  left: auto; right: -14%; top: -16%; bottom: auto; width: 62%; aspect-ratio: 1; border-radius: 50%;
+  background: repeating-linear-gradient(-45deg, var(--fill) 0 2px, transparent 2px 9px);
+}
+.project:nth-child(even) .illo-hatch{ right: auto; left: -14%; }
+.illo--blindspot{ aspect-ratio: 900 / 622; }
+.illo--blindspot .illo-line{ --src: url('assets/illo-blindspot-line.webp?v=73'); }
+.illo--blindspot .illo-fill{ --src: url('assets/illo-blindspot-fill.webp?v=73'); }
+.illo--blindspot .illo-paper{ --src: url('assets/illo-blindspot-solid.webp?v=73'); }
+.illo--fairly{ aspect-ratio: 652 / 777; width: min(100%, 200px); }
+.illo--fairly .illo-line{ --src: url('assets/illo-fairly-line.webp?v=73'); }
+.illo--fairly .illo-fill{ --src: url('assets/illo-fairly-fill.webp?v=73'); }
+.illo--fairly .illo-paper{ --src: url('assets/illo-fairly-solid.webp?v=73'); }
+.illo--voltra{ aspect-ratio: 629 / 747; width: min(100%, 200px); }
+.illo--voltra .illo-line{ --src: url('assets/illo-voltra-line.webp?v=73'); }
+.illo--voltra .illo-fill{ --src: url('assets/illo-voltra-fill.webp?v=73'); }
+.illo--voltra .illo-paper{ --src: url('assets/illo-voltra-solid.webp?v=73'); }
+.illo--aramark{ aspect-ratio: 900 / 555; }
+.illo--aramark .illo-line{ --src: url('assets/illo-aramark-line.webp?v=73'); }
+.illo--aramark .illo-fill{ --src: url('assets/illo-aramark-fill.webp?v=73'); }
+.illo--aramark .illo-paper{ --src: url('assets/illo-aramark-solid.webp?v=73'); }
+.illo--ec2{ aspect-ratio: 900 / 626; }
+.illo--ec2 .illo-line{ --src: url('assets/illo-ec2-line.webp?v=73'); }
+.illo--ec2 .illo-fill{ --src: url('assets/illo-ec2-fill.webp?v=73'); }
+.illo--ec2 .illo-paper{ --src: url('assets/illo-ec2-solid.webp?v=73'); }
+
+/* revealed as the row scrolls in: the linework wipes on, then the fill and the disc */
+.js .illo-line{ clip-path: inset(0 100% 0 0); }
+.js .illo-fill, .js .illo-hatch, .js .illo-paper{ opacity: 0; }
+.js .reveal.in-view .illo-line{ animation: wipeOn 1s cubic-bezier(.4,0,.2,1) .15s forwards; }
+.js .reveal.in-view .illo-fill, .js .reveal.in-view .illo-paper{ animation: fadeUp .7s ease .8s forwards; }
+.js .reveal.in-view .illo-hatch{ animation: fadeHatch .8s ease 1s forwards; }
+@keyframes wipeOn{ to{ clip-path: inset(0 0 0 0); } }
+@keyframes fadeUp{ to{ opacity: 1; } }
+@keyframes fadeHatch{ to{ opacity: .85; } }
 
 /* ---------- Experience ---------- */
 .experience .section-title{ margin-bottom: 56px; }
@@ -564,7 +607,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .project:nth-child(even) .project-info{ order: 0; }
   .project-margin{ padding-top: 0; }
   .fact-line{ grid-template-columns: 1fr; gap: 4px; }
-  .illo{ align-self: flex-start !important; }
+  .illo{ align-self: flex-start !important; margin-top: 6px; }
   .tl-item{ grid-template-columns: 1fr; gap: 8px; }
   .section{ padding: 90px 0; }
   .section-head{ flex-direction: column; align-items:flex-start; margin-bottom: 40px; }
