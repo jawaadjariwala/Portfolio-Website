@@ -501,51 +501,35 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 /* opaque silhouette, so the striped disc reads as behind the drawing */
 .illo-paper{ background: var(--bg); }
 /* the striped disc behind, drawn in code so all five match */
-/* The hatching is the drawing's own silhouette, offset down and right: the
-   paper layer above it knocks out the overlap, leaving a struck shadow that
-   follows whatever shape it belongs to — round under the clock, stepped along
-   the stack of documents. Offset matches the logo's misregistered fill. */
-.illo-hatch{
-  -webkit-mask-image: var(--src); mask-image: var(--src);
-  -webkit-mask-size: contain;     mask-size: contain;
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: center;  mask-position: center;
-  /* the fill pulled toward the linework, so the hatch reads on any palette —
-     a pale fill on a near-white ground would otherwise vanish */
-  background: repeating-linear-gradient(-45deg,
-    color-mix(in srgb, var(--fill) 72%, var(--line)) 0 2.5px, transparent 2.5px 8px);
-  transform: translate(6%, 7.5%);
-}
 .illo--blindspot{ aspect-ratio: 900 / 622; }
 .illo--blindspot .illo-line{ --src: url('assets/illo-blindspot-line.webp?v=73'); }
 .illo--blindspot .illo-fill{ --src: url('assets/illo-blindspot-fill.webp?v=73'); }
-.illo--blindspot .illo-paper, .illo--blindspot .illo-hatch{ --src: url('assets/illo-blindspot-solid.webp?v=73'); }
+.illo--blindspot .illo-paper{ --src: url('assets/illo-blindspot-solid.webp?v=73'); }
 .illo--fairly{ aspect-ratio: 652 / 777; width: min(100%, 200px); }
 .illo--fairly .illo-line{ --src: url('assets/illo-fairly-line.webp?v=73'); }
 .illo--fairly .illo-fill{ --src: url('assets/illo-fairly-fill.webp?v=73'); }
-.illo--fairly .illo-paper, .illo--fairly .illo-hatch{ --src: url('assets/illo-fairly-solid.webp?v=73'); }
+.illo--fairly .illo-paper{ --src: url('assets/illo-fairly-solid.webp?v=73'); }
 .illo--voltra{ aspect-ratio: 629 / 747; width: min(100%, 200px); }
 .illo--voltra .illo-line{ --src: url('assets/illo-voltra-line.webp?v=73'); }
 .illo--voltra .illo-fill{ --src: url('assets/illo-voltra-fill.webp?v=73'); }
-.illo--voltra .illo-paper, .illo--voltra .illo-hatch{ --src: url('assets/illo-voltra-solid.webp?v=73'); }
+.illo--voltra .illo-paper{ --src: url('assets/illo-voltra-solid.webp?v=73'); }
 .illo--aramark{ aspect-ratio: 900 / 555; }
 .illo--aramark .illo-line{ --src: url('assets/illo-aramark-line.webp?v=73'); }
 .illo--aramark .illo-fill{ --src: url('assets/illo-aramark-fill.webp?v=73'); }
-.illo--aramark .illo-paper, .illo--aramark .illo-hatch{ --src: url('assets/illo-aramark-solid.webp?v=73'); }
+.illo--aramark .illo-paper{ --src: url('assets/illo-aramark-solid.webp?v=73'); }
 .illo--ec2{ aspect-ratio: 900 / 626; }
 .illo--ec2 .illo-line{ --src: url('assets/illo-ec2-line.webp?v=73'); }
 .illo--ec2 .illo-fill{ --src: url('assets/illo-ec2-fill.webp?v=73'); }
-.illo--ec2 .illo-paper, .illo--ec2 .illo-hatch{ --src: url('assets/illo-ec2-solid.webp?v=73'); }
+.illo--ec2 .illo-paper{ --src: url('assets/illo-ec2-solid.webp?v=73'); }
 
 /* revealed as the row scrolls in: the linework wipes on, then the fill and the disc */
 .js .illo-line{ clip-path: inset(0 100% 0 0); }
-.js .illo-fill, .js .illo-hatch, .js .illo-paper{ opacity: 0; }
+.js .illo-fill, .js .illo-paper{ opacity: 0; }
 .js .reveal.in-view .illo-line{ animation: wipeOn 1s cubic-bezier(.4,0,.2,1) .15s forwards; }
 .js .reveal.in-view .illo-fill, .js .reveal.in-view .illo-paper{ animation: fadeUp .7s ease .8s forwards; }
-.js .reveal.in-view .illo-hatch{ animation: fadeHatch .8s ease 1s forwards; }
 @keyframes wipeOn{ to{ clip-path: inset(0 0 0 0); } }
 @keyframes fadeUp{ to{ opacity: 1; } }
-@keyframes fadeHatch{ to{ opacity: .85; } }
+
 
 /* ---------- Experience ---------- */
 .experience .section-title{ margin-bottom: 56px; }
