@@ -506,6 +506,25 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 /* The offset fills drift a few pixels toward the cursor (script.js sets --mx/--my). */
 .project-figure::before{ transform: translate(calc(9px + var(--mx, 0) * 4px), calc(9px + var(--my, 0) * 4px)); }
 .project-index::before{ transform: translate(calc(-50% + var(--mx, 0) * 3px), calc(-50% + var(--my, 0) * 3px)); }
+/* Photo plates: the image is the fill, clipped to the frame, with the offset
+   fill still peeking out behind. Hovering the row brings it into register. */
+.plate-photo{ padding: 0; overflow: hidden; }
+.plate-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit: cover; display:block; border-radius: 18px; }
+.project-figure::before{ transition: transform .45s var(--ease); }
+.project:hover .project-figure::before{ transform: translate(calc(var(--mx, 0) * 4px), calc(var(--my, 0) * 4px)); }
+/* Phone plate: a tall screen drawn as a slim device on the fill. */
+.plate-phone{ padding: 18px; }
+.plate-phone .phone{
+  height: 92%; aspect-ratio: 436 / 900; border: 2px solid var(--line); border-radius: 22px;
+  overflow: hidden; background: var(--text); box-shadow: 6px 6px 0 var(--bg);
+}
+.plate-phone .phone img{ width:100%; height:100%; object-fit: cover; display:block; }
+/* What the plate used to say now sits in the column built for reading. */
+.project-outcome{
+  display:grid; grid-template-columns: 122px 1fr; gap: 20px; align-items: baseline;
+  margin: -6px 0 22px; color: var(--subtext); font-size: 15px; line-height: 1.5; max-width: 52ch;
+}
+.project-outcome strong{ color: var(--text); font-weight: 600; }
 .plate-icon{
   width: 42px; height: 42px; fill: none; stroke: var(--line);
   stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
@@ -588,6 +607,8 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .project, .project:nth-child(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
   .project:nth-child(even) .project-figure{ order: -1; }
   .project-figure{ aspect-ratio: 16/9; }
+  .plate-phone{ aspect-ratio: 1 / 1; }
+  .project-outcome{ grid-template-columns: 1fr; gap: 4px; }
   .tl-item{ grid-template-columns: 1fr; gap: 8px; }
   .section{ padding: 90px 0; }
   .section-head{ flex-direction: column; align-items:flex-start; margin-bottom: 40px; }
