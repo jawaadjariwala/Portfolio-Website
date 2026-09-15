@@ -1,13 +1,18 @@
 document.documentElement.classList.add('js');
 requestAnimationFrame(() => document.body.classList.add('intro-ready'));
 
-// The tagline is sized so it spans exactly the width of the name line above it.
+// The tagline is sized so it spans exactly the width of the name line above it,
+// and the paragraph below is held to that same measure, so the whole block
+// lines up on both edges.
 function fitTagline(){
   const name = document.getElementById('nameLine'), tag = document.getElementById('tagLine');
   if (!name || !tag) return;
   tag.style.fontSize = '';
-  const ratio = name.getBoundingClientRect().width / tag.getBoundingClientRect().width;
+  const w = name.getBoundingClientRect().width;
+  const ratio = w / tag.getBoundingClientRect().width;
   tag.style.fontSize = (parseFloat(getComputedStyle(tag).fontSize) * ratio).toFixed(2) + 'px';
+  const sub = document.querySelector('.hero-sub');
+  if (sub) sub.style.maxWidth = Math.round(w) + 'px';
 }
 document.fonts.ready.then(fitTagline);
 window.addEventListener('resize', fitTagline);
