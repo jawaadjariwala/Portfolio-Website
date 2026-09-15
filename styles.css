@@ -410,10 +410,12 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 /* ---------- About ---------- */
 /* About reads as a story: the statement and prose on the left, the photograph
    sitting in the margin the way the drawings do in Work. */
-.about-grid{ display:grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 72px; align-items: start; }
+/* Equal columns, so the statement on the right sets to the same measure as the
+   prose on the left. */
+.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; }
 .about-lead{
-  font-size: clamp(1.6rem, 2.5vw, 2.15rem); line-height: 1.2; letter-spacing: -0.02em;
-  max-width: 20ch; margin-bottom: 32px;
+  font-size: clamp(1.7rem, 3.05vw, 2.6rem); line-height: 1.25; letter-spacing: -0.02em;
+  text-align: justify; hyphens: none; margin: 34px 0 0;
 }
 .about-story p{
   color: var(--subtext); font-size: 16.5px; line-height: 1.75;
@@ -422,17 +424,17 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .about-story p:last-child{ margin-bottom: 0; }
 .about-story strong{ color: var(--text); font-weight: 600; }
 
-.about-side{ display:flex; flex-direction:column; align-items:center; position: relative; padding-top: 10px; }
+.about-side{ display:flex; flex-direction:column; position: relative; padding-top: 4px; }
 .photo{
   position: relative; width: min(100%, 260px); aspect-ratio: 1; border-radius: 50%;
-  border: 2px solid var(--line); overflow: hidden; isolation: isolate;
+  border: 2px solid var(--line); overflow: hidden; isolation: isolate; margin: 0 auto;
 }
 .photo img{ width:100%; height:100%; object-fit: cover; display:block; }
 .photo::after{
   content:''; position:absolute; inset:-2px; border-radius: 50%; pointer-events:none;
 }
 .about-side::before{
-  content:''; position:absolute; z-index:-1; top: 23px; left: 50%;
+  content:''; position:absolute; z-index:-1; top: 17px; left: 50%;
   transform: translateX(calc(-50% + 13px));
   width: min(100%, 260px); aspect-ratio: 1; border-radius: 50%; background: var(--fill);
 }
@@ -440,7 +442,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 /* A named aside, in the manner of robbowen.digital's "Photography." */
 .about-more{
   margin-top: 80px; padding-top: 44px; border-top: 1px solid var(--rule);
-  display:grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 0 72px; align-items: start;
+  display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 72px; align-items: start;
 }
 .about-more h3{ font-size: clamp(1.4rem, 2vw, 1.75rem); letter-spacing: -0.02em; }
 .about-more p{
