@@ -412,14 +412,17 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    sitting in the margin the way the drawings do in Work. */
 /* Equal columns, so the statement on the right sets to the same measure as the
    prose on the left. */
-.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; }
+.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
 .about-lead{
-  font-size: clamp(1.7rem, 3.05vw, 2.6rem); line-height: 1.25; letter-spacing: -0.02em;
-  text-align: justify; hyphens: none; margin: 34px 0 0;
+  font-size: clamp(1.25rem, 1.85vw, 1.6rem); line-height: 1.35; letter-spacing: -0.015em;
+  text-align: justify; hyphens: none; text-wrap: pretty;
+  width: min(100%, 278px); margin: 32px auto 0;   /* centred under the photograph */
 }
 .about-story p{
   color: var(--subtext); font-size: 16.5px; line-height: 1.75;
-  text-align: justify; hyphens: auto; hyphenate-limit-chars: 8 4 3; margin-bottom: 20px;
+  text-align: justify; hyphens: auto; hyphenate-limit-chars: 8 4 3;
+  text-wrap: pretty;   /* never leave a single word on the last line */
+  margin-bottom: 20px;
 }
 .about-story p:last-child{ margin-bottom: 0; }
 .about-story strong{ color: var(--text); font-weight: 600; }
@@ -438,18 +441,6 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   transform: translateX(calc(-50% + 13px));
   width: min(100%, 260px); aspect-ratio: 1; border-radius: 50%; background: var(--fill);
 }
-
-/* A named aside, in the manner of robbowen.digital's "Photography." */
-.about-more{
-  margin-top: 80px; padding-top: 44px; border-top: 1px solid var(--rule);
-  display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 72px; align-items: start;
-}
-.about-more h3{ font-size: clamp(1.4rem, 2vw, 1.75rem); letter-spacing: -0.02em; }
-.about-more p{
-  color: var(--subtext); font-size: 16.5px; line-height: 1.75;
-  text-align: justify; hyphens: auto; hyphenate-limit-chars: 8 4 3; grid-column: 1;
-}
-.about-more h3{ grid-column: 1; margin-bottom: 18px; }
 
 .toolkit{
   margin-top: 80px; padding-top: 44px; border-top: 1px solid var(--rule);
@@ -625,7 +616,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .hero-sub{ margin-left:auto; margin-right:auto; }
   .hero-actions, .hero-meta, .hero-note{ justify-content:center; }
   .hero-meta li{ align-items:center; }
-  .about-grid, .about-more{ grid-template-columns: 1fr; gap: 30px; }
+  .about-grid{ grid-template-columns: 1fr; gap: 30px; }
   .about-side{ order: -1; align-items: flex-start; }
   .photo{ width: 190px; }
   .about-side::before{ left: 0; transform: translateX(13px); width: 190px; }
