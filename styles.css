@@ -408,11 +408,12 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 }
 
 /* ---------- About ---------- */
-.about-grid{ display:grid; grid-template-columns: auto 1fr 1fr; gap: 56px; margin-bottom: 84px; align-items: start; }
+.about-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-bottom: 84px; align-items: start; }
 /* The photograph carries the logo's device: a ring in the line colour with the
    fill offset behind it, so the real face belongs to the same drawn world as
    the illustrated one in the hero. */
 .about-me{ position: relative; }
+.about-me .photo{ margin-bottom: 30px; }
 .photo{
   position: relative; width: 168px; aspect-ratio: 1; border-radius: 50%;
   border: 2px solid var(--line); overflow: hidden; isolation: isolate;
