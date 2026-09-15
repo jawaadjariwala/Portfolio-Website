@@ -413,17 +413,20 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    fill offset behind it, so the real face belongs to the same drawn world as
    the illustrated one in the hero. */
 .about-me{ position: relative; }
-.about-me .photo{ margin-bottom: 30px; }
 .photo{
-  position: relative; width: 168px; aspect-ratio: 1; border-radius: 50%;
+  position: relative; width: 216px; aspect-ratio: 1; border-radius: 50%;
   border: 2px solid var(--line); overflow: hidden; isolation: isolate;
+  margin: 0 auto 34px;                 /* centred over the statement below */
 }
 .photo img{ width:100%; height:100%; object-fit: cover; display:block; }
 .about-me::before{
-  content:''; position:absolute; z-index:-1; left: 10px; top: 10px;
-  width: 168px; aspect-ratio: 1; border-radius: 50%; background: var(--fill);
+  content:''; position:absolute; z-index:-1; left: 50%; top: 11px;
+  transform: translateX(calc(-50% + 11px));
+  width: 216px; aspect-ratio: 1; border-radius: 50%; background: var(--fill);
 }
-.about-lead{ font-size: clamp(1.9rem, 3vw, 2.6rem); max-width: 15ch; }
+/* Set as a justified block rather than a display line: wider measure, smaller
+   size, both edges square. */
+.about-lead{ font-size: clamp(1.4rem, 2.1vw, 1.85rem); line-height: 1.3; text-align: justify; hyphens: none; }
 /* Three labelled one-liners instead of paragraphs: scannable in a few seconds. */
 .about-points{ display:flex; flex-direction:column; gap: 30px; padding-top: 8px; }
 .about-points li{ display:grid; grid-template-columns: 82px 1fr; gap: 22px; align-items: baseline; }
@@ -608,8 +611,8 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .hero-actions, .hero-meta, .hero-note{ justify-content:center; }
   .hero-meta li{ align-items:center; }
   .about-grid{ grid-template-columns: 1fr; gap: 34px; }
-  .photo{ width: 132px; }
-  .about-me::before{ width: 132px; }
+  .photo{ width: 180px; }
+  .about-me::before{ width: 180px; }
   .about-points li{ grid-template-columns: 1fr; gap: 6px; }
   .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
   .project, .project:nth-of-type(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
