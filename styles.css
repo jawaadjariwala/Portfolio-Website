@@ -412,7 +412,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    sitting in the margin the way the drawings do in Work. */
 /* Equal columns, so the statement on the right sets to the same measure as the
    prose on the left. */
-.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; }
+.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
 .about-lead{
   font-size: clamp(1.05rem, 1.45vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em;
   text-align: justify; hyphens: none; text-wrap: pretty;
