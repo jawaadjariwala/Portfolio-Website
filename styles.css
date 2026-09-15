@@ -416,7 +416,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .about-lead{
   font-size: clamp(1.05rem, 1.45vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em;
   text-align: justify; hyphens: none; text-wrap: pretty;
-  width: min(100%, 320px); margin: 34px auto 0;   /* same measure as the photograph above */
+  width: 100%; margin: 34px 0 0;   /* same measure as the prose opposite */
 }
 .about-story p{
   color: var(--subtext); font-size: 16.5px; line-height: 1.75;
@@ -619,8 +619,8 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .about-grid{ grid-template-columns: 1fr; gap: 30px; }
   .about-side{ order: -1; }
   /* photo, its disc and the statement share one measure here too */
-  .photo, .about-side::before, .about-lead{ width: min(100%, 280px); }
-  .about-lead{ margin-top: 26px; }
+  .photo, .about-side::before{ width: min(100%, 280px); }
+  .about-lead{ width: 100%; margin-top: 26px; }
   .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
   .project, .project:nth-of-type(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
   .project:nth-of-type(even) .project-info{ order: 0; }
