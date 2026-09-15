@@ -421,7 +421,7 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 }
 /* Toolkit: four quiet columns, no pills or logos. */
 .toolkit{
-  margin-top: 84px; padding-top: 44px; border-top: 1px solid var(--rule);
+  margin-top: 0; padding-top: 44px; border-top: 1px solid var(--rule);
   display:grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
 }
 .tk-group h3{
@@ -432,16 +432,6 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .tk-group ul{ display:flex; flex-direction:column; gap: 8px; }
 .tk-group li{ font-size: 15px; color: var(--subtext); }
 
-.facts-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
-/* Figures, not cards: a hairline between them is all the structure needed. */
-.fact{
-  display:flex; flex-direction:column; gap: 10px;
-  padding: 4px 28px; border-left: 1px solid var(--rule);
-}
-.fact:first-child{ padding-left: 0; border-left: 0; }
-.fact-num{ font-family:'Bitter', serif; font-size: 2.8rem; line-height: 1; color: var(--line); font-weight: 600; }
-.fact-num sup{ font-size: .5em; vertical-align: super; }
-.fact-label{ font-size: 14px; color: var(--subtext); line-height: 1.45; }
 
 /* ---------- Work ---------- */
 .project-list{ display:flex; flex-direction:column; gap: 0; }
@@ -604,7 +594,6 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .about-grid{ grid-template-columns: 1fr; gap: 34px; }
   .about-points li{ grid-template-columns: 1fr; gap: 6px; }
   .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
-  .facts-row{ grid-template-columns: repeat(2, 1fr); }
   .project, .project:nth-of-type(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
   .project:nth-of-type(even) .project-info{ order: 0; }
   .project-margin{ padding-top: 0; }
@@ -641,8 +630,6 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .hero-note-sep{ display: none; }
   .scroll-cue{ display:none; }
   .section-inner{ padding: 0 20px; }
-  .facts-row{ grid-template-columns: 1fr 1fr; gap: 10px; }
-  .fact{ padding: 18px 16px; }
   .contact-list a{ grid-template-columns: 1fr auto; gap: 6px 16px; padding: 20px 0; }
   .c-label{ grid-column: 1 / -1; }
   .site-footer{ justify-content:center; text-align:center; }
