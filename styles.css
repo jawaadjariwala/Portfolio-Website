@@ -617,9 +617,10 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   .hero-actions, .hero-meta, .hero-note{ justify-content:center; }
   .hero-meta li{ align-items:center; }
   .about-grid{ grid-template-columns: 1fr; gap: 30px; }
-  .about-side{ order: -1; align-items: flex-start; }
-  .photo{ width: 190px; }
-  .about-side::before{ left: 0; transform: translateX(13px); width: 190px; }
+  .about-side{ order: -1; }
+  /* photo, its disc and the statement share one measure here too */
+  .photo, .about-side::before, .about-lead{ width: min(100%, 280px); }
+  .about-lead{ margin-top: 26px; }
   .toolkit{ grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 60px; }
   .project, .project:nth-of-type(even){ grid-template-columns: 1fr; padding: 28px; gap: 26px; }
   .project:nth-of-type(even) .project-info{ order: 0; }
