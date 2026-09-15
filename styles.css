@@ -412,11 +412,11 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    sitting in the margin the way the drawings do in Work. */
 /* Equal columns, so the statement on the right sets to the same measure as the
    prose on the left. */
-.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+.about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; }
 .about-lead{
   font-size: clamp(1.05rem, 1.45vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em;
   text-align: justify; hyphens: none; text-wrap: pretty;
-  width: min(100%, 330px); margin: 32px auto 0;   /* centred under the photograph */
+  width: min(100%, 320px); margin: 34px auto 0;   /* same measure as the photograph above */
 }
 .about-story p{
   color: var(--subtext); font-size: 16.5px; line-height: 1.75;
@@ -427,9 +427,9 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .about-story p:last-child{ margin-bottom: 0; }
 .about-story strong{ color: var(--text); font-weight: 600; }
 
-.about-side{ display:flex; flex-direction:column; position: relative; padding-top: 4px; }
+.about-side{ display:flex; flex-direction:column; position: relative; padding-top: 0; }
 .photo{
-  position: relative; width: min(100%, 260px); aspect-ratio: 1; border-radius: 50%;
+  position: relative; width: min(100%, 320px); aspect-ratio: 1; border-radius: 50%;
   border: 2px solid var(--line); overflow: hidden; isolation: isolate; margin: 0 auto;
 }
 .photo img{ width:100%; height:100%; object-fit: cover; display:block; }
@@ -437,9 +437,9 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
   content:''; position:absolute; inset:-2px; border-radius: 50%; pointer-events:none;
 }
 .about-side::before{
-  content:''; position:absolute; z-index:-1; top: 17px; left: 50%;
+  content:''; position:absolute; z-index:-1; top: 13px; left: 50%;
   transform: translateX(calc(-50% + 13px));
-  width: min(100%, 260px); aspect-ratio: 1; border-radius: 50%; background: var(--fill);
+  width: min(100%, 320px); aspect-ratio: 1; border-radius: 50%; background: var(--fill);
 }
 
 .toolkit{
