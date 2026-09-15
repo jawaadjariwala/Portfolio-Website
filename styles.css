@@ -460,6 +460,8 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
 .project-tag{ font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--line); }
 .project h3{ font-size: clamp(1.9rem, 3vw, 2.5rem); margin-bottom: 16px; letter-spacing: -0.02em; }
 .project p{ color: var(--subtext); margin-bottom: 24px; max-width: 52ch; font-size: 16.5px; line-height: 1.6; }
+/* Descriptions set justified, so each block squares off against the column. */
+.project-info > p:not(.fact-line){ text-align: justify; hyphens: auto; }
 .project-links{ display:flex; gap: 22px; }
 .project-links a{ font-weight: 700; font-size: 14.5px; color: var(--line); }
 .project-links a span{ display:inline-block; transition: transform .25s var(--ease); }
