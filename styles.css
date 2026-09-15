@@ -414,9 +414,9 @@ html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor: none; }
    prose on the left. */
 .about-grid{ display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
 .about-lead{
-  font-size: clamp(1.25rem, 1.85vw, 1.6rem); line-height: 1.35; letter-spacing: -0.015em;
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem); line-height: 1.45; letter-spacing: -0.01em;
   text-align: justify; hyphens: none; text-wrap: pretty;
-  width: min(100%, 278px); margin: 32px auto 0;   /* centred under the photograph */
+  width: min(100%, 330px); margin: 32px auto 0;   /* centred under the photograph */
 }
 .about-story p{
   color: var(--subtext); font-size: 16.5px; line-height: 1.75;
